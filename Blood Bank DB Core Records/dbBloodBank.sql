@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS `BloodBankdb`;
 USE `BloodBankdb`;
 
 -- CREATE Donor Records
-CREATE TABLE IF NOT EXISTS donor (
+CREATE TABLE IF NOT EXISTS donors (
 	donor_id INT AUTO_INCREMENT PRIMARY KEY,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS technicians (
     first_name VARCHAR(50),
     contact_number VARCHAR(15),
     donor_id INT,
-    FOREIGN KEY (donor_id) REFERENCES donor(donor_id)
+    FOREIGN KEY (donor_id) REFERENCES donors(donor_id)
 );
 
 -- CREATE Blood Inventory Records
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS inventory (
     expiry_date DATE,
     donor_id INT,
     technician_id INT,
-    FOREIGN KEY (donor_id) REFERENCES donor(donor_id),
+    FOREIGN KEY (donor_id) REFERENCES donors(donor_id),
     FOREIGN KEY (technician_id) REFERENCES technicians(technician_id)
 );
 
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS hospitals (
 
 
 -- Unique constraint to prevent duplicate records 
-ALTER TABLE Donor
+ALTER TABLE donors
 ADD CONSTRAINT unique_donor_combo UNIQUE (first_name, last_name, date_of_birth, blood_type);
 
 
@@ -74,7 +74,7 @@ ADD CONSTRAINT unique_donor_combo UNIQUE (first_name, last_name, date_of_birth, 
 -- ###################################################################
 
 -- INSERT Donor Records
-INSERT INTO donor (last_name, first_name, contact_info, age, sex, date_of_birth, blood_type, remarks)
+INSERT INTO donors (last_name, first_name, contact_info, age, sex, date_of_birth, blood_type, remarks)
 VALUES
 ('Chua'  , 'Aiven'  , '09123456789', '18', 'M', '2007-09-10', 'A+', 'No issues'),
 ('Almeda', 'Angelo' , '09987654321', '19', 'M', '2006-03-08', 'B-', 'No issues'),
