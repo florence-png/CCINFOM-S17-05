@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS donors (
 	donor_id INT AUTO_INCREMENT PRIMARY KEY,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
-    contact_info VARCHAR(100),
+    donor_email VARCHAR(50),
+	contact_number VARCHAR(15),
     age INT CHECK (age >= 18),
     sex CHAR(1) CHECK (sex IN ('M', 'F')),
     date_of_birth DATE,
@@ -21,7 +22,9 @@ CREATE TABLE IF NOT EXISTS technicians (
 	technician_id INT PRIMARY KEY,
     last_name VARCHAR(50),
     first_name VARCHAR(50),
-    contact_number VARCHAR(15)
+	technician_email VARCHAR(50),
+    contact_number VARCHAR(15),
+	date_employed DATE
 );
 
 
