@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS donors (
     sex CHAR(1) CHECK (sex IN ('M', 'F')),
     date_of_birth DATE,
     blood_type VARCHAR(3) CHECK (blood_type IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')),
-    remarks TEXT
+	remarks TEXT
 );
 
 
@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS inventory (
     component_type VARCHAR(15),
     received_date DATE,
     expiry_date DATE,
+	remarks TEXT,
     donor_id INT,
     technician_id INT,
     branch_id INT,
