@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS technicians (
     first_name VARCHAR(50) NOT NULL,
 	technician_email VARCHAR(50),
     contact_number VARCHAR(15),
+    age INT CHECK (age >= 18),
+    sex CHAR(1) CHECK (sex IN ('M', 'F')),
 	date_employed DATE
 );
 
@@ -99,12 +101,12 @@ VALUES
 ('Dela Cruz', 'Juan', 'donor_15@gmail.com', '12345678901', 24, 'M', '2001-09-11', 'O+' , 'No Issues');
 
 -- INSERT Technician Records
-INSERT INTO technicians (technician_id, last_name, first_name, technician_email, contact_number, date_employed)
+INSERT INTO technicians (technician_id, last_name, first_name, technician_email, contact_number, age, sex, date_employed)
 VALUES
-(1, 'Doe'    , 'John'    , 'technician01_@gmail.com', '091234567', '2019-01-18'),
-(2, 'Rivera' , 'Matthias', 'technician02_@gmail.com', '098765432', '2017-08-25'),
-(3, 'Russell', 'Andrew'  , 'technician03_@gmail.com', '012345678', '2020-11-11'),
-(4, 'James'  , 'Lebron'  , 'technician04_@gmail.com', '098765432', '2020-07-15');
+(1, 'Doe'    , 'John'    , 'technician01_@gmail.com', '091234567', 27, 'M', '2019-01-18'),
+(2, 'Rivera' , 'Matthias', 'technician02_@gmail.com', '098765432', 32, 'M', '2017-08-25'),
+(3, 'Russell', 'Andrew'  , 'technician03_@gmail.com', '012345678', 30, 'M', '2020-11-11'),
+(4, 'James'  , 'Lebron'  , 'technician04_@gmail.com', '098765432', 37, 'M', '2020-07-15');
 
 -- INSERT Blood Branch Records
 INSERT INTO blood_banks (branch_id, branch_name, street_address, city, region, contact_number)
