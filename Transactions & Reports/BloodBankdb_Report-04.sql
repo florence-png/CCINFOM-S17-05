@@ -1,5 +1,5 @@
 -- Transaction #04: Processing Hospital Request
-START TRANSACTION
+-- START TRANSACTION
 
 -- UPDATE
 
