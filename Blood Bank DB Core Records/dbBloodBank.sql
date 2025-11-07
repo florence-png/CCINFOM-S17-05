@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS donors (
 	contact_number VARCHAR(15),
     age INT CHECK (age >= 18),
     sex CHAR(1) CHECK (sex IN ('M', 'F')),
-    date_of_birth DATE,
+    birthdate DATE,
     blood_type VARCHAR(3) CHECK (blood_type IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')),
 	remarks TEXT
 );
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS blood_banks (
     branch_name VARCHAR(50) NOT NULL,
     street_address VARCHAR(100) NOT NULL,
     city VARCHAR(50) NOT NULL,
+    region VARCHAR(50) NOT NULL,
     contact_number VARCHAR(15)
 );
 
@@ -62,6 +63,7 @@ CREATE TABLE IF NOT EXISTS hospitals (
     hospital_name VARCHAR(50) NOT NULL,
     street_address VARCHAR(100) NOT NULL,
     city VARCHAR(50) NOT NULL,
+    region VARCHAR(50) NOT NULL,
     contact_number VARCHAR(15),
     branch_id INT,
     FOREIGN KEY (branch_id) REFERENCES blood_banks(branch_id)
@@ -70,7 +72,7 @@ CREATE TABLE IF NOT EXISTS hospitals (
 
 -- Unique constraint to prevent duplicate records 
 ALTER TABLE donors
-ADD CONSTRAINT unique_donor_combo UNIQUE (first_name, last_name, date_of_birth, blood_type);
+ADD CONSTRAINT unique_donor_combo UNIQUE (first_name, last_name, birthdate, blood_type);
 
 
 -- ###################################################################
@@ -78,7 +80,7 @@ ADD CONSTRAINT unique_donor_combo UNIQUE (first_name, last_name, date_of_birth, 
 -- ###################################################################
 
 -- INSERT Donor Records
-INSERT INTO donors (last_name, first_name, donor_email, contact_number, age, sex, date_of_birth, blood_type, remarks)
+INSERT INTO donors (last_name, first_name, donor_email, contact_number, age, sex, birthdate, blood_type, remarks)
 VALUES
 ('Chua'  , 'Aiven'  , 'donor_01@gmail.com', '09123456789', 18, 'M', '2007-09-10', 'A+' , 'No issues'),
 ('Almeda', 'Angelo' , 'donor_02@gmail.com', '09987654321', 19, 'M', '2006-03-08', 'B-' , 'No issues'),
@@ -105,12 +107,12 @@ VALUES
 (4, 'James'  , 'Lebron'  , 'technician04_@gmail.com', '098765432', '2020-07-15');
 
 -- INSERT Blood Branch Records
-INSERT INTO blood_banks (branch_id, branch_name, street_address, city, contact_number)
+INSERT INTO blood_banks (branch_id, branch_name, street_address, city, region, contact_number)
 VALUES
-(1, 'Maple Branch' , '100 Maple Street', 'Manila'     , '021234'),
-(2, 'Hamilton'     , '321 Burr Street' , 'Pasay'      , '025678'),
-(3, 'Mysql'        , '461 El Street'   , 'Makati'     , '029012'),
-(4, 'Sample Branch', '123 Samps Street', 'Sample City', '023456');
+(1, 'Maple Branch' , '100 Maple Street', 'Manila'     , 'Region A', '021234'),
+(2, 'Hamilton'     , '321 Burr Street' , 'Pasay'      , 'Region B', '025678'),
+(3, 'Mysql'        , '461 El Street'   , 'Makati'     , 'Region C', '029012'),
+(4, 'Sample Branch', '123 Samps Street', 'Sample City', 'Region D', '023456');
 
 -- INSERT Blood Inventory Records
 INSERT INTO inventory (inventory_id, blood_type, component_type, received_date, expiry_date, remarks, donor_id, technician_id, branch_id)
@@ -148,11 +150,11 @@ VALUES
 (4, 'B-' , 'cryoprecipitate', '2025-04-25', '2099-09-09', 'No Issues', 2, 1, 4);
 
 -- INSERT Hospital Records
-INSERT INTO hospitals (hospital_id, hospital_name, street_address, city, contact_number, branch_id)
+INSERT INTO hospitals (hospital_id, hospital_name, street_address, city, region, contact_number, branch_id)
 VALUES 
-(1, 'Pines Standing Hospital'    , '999 Trese Street'  , 'Manila'     , 12345, 1),
-(2, 'Mors Central Hospital'      , '111 Koffine Street', 'Pasay'      , 67890, 2),
-(3, 'Silis Hospital'             , '455 El Street'     , 'Makati'     , 13579, 3),
-(4, 'Simpleston General Hospital', '119 Samps Street'  , 'Sample City', 24680, 4);
+(1, 'Pines Standing Hospital'    , '999 Trese Street'  , 'Manila'     , 'Region A', '0012345', 1),
+(2, 'Mors Central Hospital'      , '111 Koffine Street', 'Pasay'      , 'Region B', '0067890', 2),
+(3, 'Silis Hospital'             , '455 El Street'     , 'Makati'     , 'Region C', '0013579', 3),
+(4, 'Simpleston General Hospital', '119 Samps Street'  , 'Sample City', 'Region D', '0024680', 4);
 
 
