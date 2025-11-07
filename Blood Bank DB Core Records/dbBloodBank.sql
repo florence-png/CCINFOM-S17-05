@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS donors (
 -- CREATE Technician Records
 CREATE TABLE IF NOT EXISTS technicians (
 	technician_id INT PRIMARY KEY,
-    last_name VARCHAR(50),
-    first_name VARCHAR(50),
+    last_name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
 	technician_email VARCHAR(50),
     contact_number VARCHAR(15),
 	date_employed DATE
