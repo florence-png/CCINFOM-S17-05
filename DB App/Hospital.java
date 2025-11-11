@@ -1,20 +1,20 @@
 public class Hospital {
-    private int hospitalId;
+    private int hospital_id;
     private String name;
     private String address;
     private String city;
-    private String contactNumber;
+    private String contact_number;
 
     public Hospital(int hospitalId, String name, String address, String city, String contactNumber) {
-        this.hospitalId = hospitalId;
+        this.hospital_id = hospitalId;
         this.name = name;
         this.address = address;
         this.city = city;
-        this.contactNumber = contactNumber;
+        this.contact_number = contactNumber;
     }
 
-    public int getHospitalId() {
-        return hospitalId;
+    public int getHospital_id() {
+        return hospital_id;
     }
 
     public String getName() {
@@ -29,7 +29,7 @@ public class Hospital {
         return city;
     }
 
-    public String getContactNumber() {
-        return contactNumber;
+    public String getContact_number() {
+        return contact_number;
     }
 }
