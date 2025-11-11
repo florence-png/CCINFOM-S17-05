@@ -1,62 +1,57 @@
 import java.sql.Date;
 
 public class Inventory {
-    private int inventoryId;
-    private int donorId;
-    private int technicianId;
-    private int branchId;
-    private String bloodType;
-    private String componentType;
+    private int inventory_id = 1;
+    private String blood_type;
+    private String component_type;
     private Date recievedDate;
-    private Date expiryDate;
-    private String remarks;
+    private Date expiry_date;
 
-    public Inventory(int inventoryId, int donorId, int technicianId, int branchId, String bloodType,
-                     String componentType, Date recievedDate, Date expiryDate, String remarks) {
-        this.inventoryId = inventoryId;
-        this.donorId = donorId;
-        this.technicianId = technicianId;
-        this.branchId = branchId;
-        this.bloodType = bloodType;
-        this.componentType = componentType;
+    public Inventory(String blood_type, String component_type, Date expiry_date, Date recievedDate) {
+        this.inventory_id++;
+        this.blood_type = blood_type;
+        this.component_type = component_type;
+        this.expiry_date = expiry_date;
         this.recievedDate = recievedDate;
-        this.expiryDate = expiryDate;
-        this.remarks = remarks;
     }
 
-    public int getInventoryId() {
-        return inventoryId;
+    public String getBlood_type() {
+        return blood_type;
     }
 
-    public int getDonorId() {
-        return donorId;
+    public void setBlood_type(String blood_type) {
+        this.blood_type = blood_type;
     }
 
-    public int getTechnicianId() {
-        return technicianId;
+    public String getComponent_type() {
+        return component_type;
     }
 
-    public int getBranchId() {
-        return branchId;
+    public void setComponent_type(String component_type) {
+        this.component_type = component_type;
     }
 
-    public String getBloodType() {
-        return bloodType;
+    public Date getExpiry_date() {
+        return expiry_date;
     }
 
-    public String getComponentType() {
-        return componentType;
+    public void setExpiry_date(Date expiry_date) {
+        this.expiry_date = expiry_date;
+    }
+
+    public int getInventory_id() {
+        return inventory_id;
+    }
+
+    public void setInventory_id(int inventory_id) {
+        this.inventory_id = inventory_id;
     }
 
     public Date getRecievedDate() {
         return recievedDate;
     }
 
-    public Date getExpiryDate() {
-        return expiryDate;
-    }
-
-    public String getremarks() {
-        return remarks;
+    public void setRecievedDate(Date recievedDate) {
+        this.recievedDate = recievedDate;
     }
 }
