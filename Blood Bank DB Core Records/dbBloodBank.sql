@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS blood_banks (
 
 -- CREATE Blood Inventory Records
 CREATE TABLE IF NOT EXISTS inventory (
-	inventory_id INT,
+	inventory_id INT PRIMARY KEY,
 	blood_type VARCHAR(3) CHECK (blood_type IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')),
     component_type VARCHAR(15),
     received_date DATE,
@@ -52,7 +52,6 @@ CREATE TABLE IF NOT EXISTS inventory (
     donor_id INT,
     technician_id INT,
     branch_id INT,
-    PRIMARY KEY (inventory_id, component_type, donor_id, technician_id, branch_id),
     FOREIGN KEY (donor_id) REFERENCES donors(donor_id),
     FOREIGN KEY (technician_id) REFERENCES technicians(technician_id),
     FOREIGN KEY (branch_id) REFERENCES blood_banks(branch_id)
@@ -66,9 +65,7 @@ CREATE TABLE IF NOT EXISTS hospitals (
     street_address VARCHAR(100) NOT NULL,
     city VARCHAR(50) NOT NULL,
     region VARCHAR(50) NOT NULL,
-    contact_number VARCHAR(15),
-    branch_id INT,
-    FOREIGN KEY (branch_id) REFERENCES blood_banks(branch_id)
+    contact_number VARCHAR(15)
 );
 
 
@@ -120,43 +117,43 @@ VALUES
 INSERT INTO inventory (inventory_id, blood_type, component_type, received_date, expiry_date, remarks, donor_id, technician_id, branch_id)
 VALUES
 (1, 'O-' , 'red blood cells', '2026-09-10', '2099-01-01', 'No Issues', 4, 2, 1),
-(1, 'O-' , 'plasma'         , '2026-09-10', '2099-01-01', 'No Issues', 4, 2, 1),
-(1, 'O-' , 'platelets'      , '2026-09-10', '2099-01-01', 'No Issues', 4, 2, 1),
-(1, 'O-' , 'cryoprecipitate', '2026-09-10', '2099-01-01', 'No Issues', 4, 2, 1),
-(1, 'AB-', 'red blood cells', '2024-02-21', '2099-01-01', 'No Issues', 8, 2, 1),
-(1, 'AB-', 'plasma'         , '2024-02-21', '2099-01-01', 'No Issues', 8, 2, 1),
-(1, 'AB-', 'cryoprecipitate', '2024-02-21', '2099-01-01', 'No Issues', 8, 2, 1),
-(1, 'AB-', 'red blood cells', '2022-07-12', '2099-01-01', 'No Issues', 9, 2, 1),
-(1, 'AB-', 'plasma'         , '2022-07-12', '2099-01-01', 'No Issues', 9, 2, 1),
-(1, 'AB-', 'platelets'      , '2022-08-12', '2099-01-01', 'No Issues', 9, 2, 1),
-(1, 'AB-', 'cryoprecipitate', '2022-08-12', '2099-01-01', 'No Issues', 9, 2, 1),
-(1, 'A-' , 'red blood cells', '2025-04-04', '2099-01-01', 'No Issues', 10, 2, 1),
-(1, 'A-' , 'plasma'         , '2025-04-04', '2099-01-01', 'No Issues', 10, 2, 1),
+(2, 'O-' , 'plasma'         , '2026-09-10', '2099-01-01', 'No Issues', 4, 2, 1),
+(3, 'O-' , 'platelets'      , '2026-09-10', '2099-01-01', 'No Issues', 4, 2, 1),
+(4, 'O-' , 'cryoprecipitate', '2026-09-10', '2099-01-01', 'No Issues', 4, 2, 1),
+(5, 'AB-', 'red blood cells', '2024-02-21', '2099-01-01', 'No Issues', 8, 2, 1),
+(6, 'AB-', 'plasma'         , '2024-02-21', '2099-01-01', 'No Issues', 8, 2, 1),
+(7, 'AB-', 'cryoprecipitate', '2024-02-21', '2099-01-01', 'No Issues', 8, 2, 1),
+(8, 'AB-', 'red blood cells', '2022-07-12', '2099-01-01', 'No Issues', 9, 2, 1),
+(9, 'AB-', 'plasma'         , '2022-07-12', '2099-01-01', 'No Issues', 9, 2, 1),
+(10, 'AB-', 'platelets'      , '2022-08-12', '2099-01-01', 'No Issues', 9, 2, 1),
+(11, 'AB-', 'cryoprecipitate', '2022-08-12', '2099-01-01', 'No Issues', 9, 2, 1),
+(12, 'A-' , 'red blood cells', '2025-04-04', '2099-01-01', 'No Issues', 10, 2, 1),
+(13, 'A-' , 'plasma'         , '2025-04-04', '2099-01-01', 'No Issues', 10, 2, 1),
 
-(2, 'O+', 'plasma'         , '2024-12-23', '2099-05-05', 'No Issues', 3, 3, 2),
-(2, 'O+', 'platelets'      , '2024-12-23', '2099-05-05', 'No Issues', 3, 3, 2),
-(2, 'O-', 'cryoprecipitate', '2024-05-05', '2099-05-05', 'No Issues', 11, 3, 2),
-(2, 'O-', 'platelets'      , '2023-10-14', '2099-05-05', 'No Issues', 12, 3, 2),
-(2, 'O-', 'plasma'         , '2023-10-14', '2099-05-05', 'No Issues', 12, 3, 2),
-(2, 'B-', 'cryoprecipitate', '2026-06-28', '2099-05-05', 'No Issues', 13, 3, 2),
-(2, 'B-', 'plasma'         , '2026-06-28', '2099-05-05', 'No Issues', 13, 3, 2),
+(14, 'O+', 'plasma'         , '2024-12-23', '2099-05-05', 'No Issues', 3, 3, 2),
+(15, 'O+', 'platelets'      , '2024-12-23', '2099-05-05', 'No Issues', 3, 3, 2),
+(16, 'O-', 'cryoprecipitate', '2024-05-05', '2099-05-05', 'No Issues', 11, 3, 2),
+(17, 'O-', 'platelets'      , '2023-10-14', '2099-05-05', 'No Issues', 12, 3, 2),
+(18, 'O-', 'plasma'         , '2023-10-14', '2099-05-05', 'No Issues', 12, 3, 2),
+(19, 'B-', 'cryoprecipitate', '2026-06-28', '2099-05-05', 'No Issues', 13, 3, 2),
+(20, 'B-', 'plasma'         , '2026-06-28', '2099-05-05', 'No Issues', 13, 3, 2),
 
-(3, 'A+', 'plasma'         , '2018-03-23', '2099-03-03', 'No Issues', 1, 4, 3),
-(3, 'A+', 'platelets'      , '2018-03-23', '2099-03-03', 'No Issues', 1, 4, 3),
-(3, 'A+', 'plasma'         , '2025-11-12', '2099-03-03', 'No Issues', 14, 4, 3),
-(3, 'O+', 'plasma'         , '2025-08-09', '2099-03-03', 'No Issues', 15, 4, 3),
+(21, 'A+', 'plasma'         , '2018-03-23', '2099-03-03', 'No Issues', 1, 4, 3),
+(22, 'A+', 'platelets'      , '2018-03-23', '2099-03-03', 'No Issues', 1, 4, 3),
+(23, 'A+', 'plasma'         , '2025-11-12', '2099-03-03', 'No Issues', 14, 4, 3),
+(24, 'O+', 'plasma'         , '2025-08-09', '2099-03-03', 'No Issues', 15, 4, 3),
 
-(4, 'A-' , 'red blood cells', '2025-03-30', '2099-09-09', 'No Issues', 5, 1, 4),
-(4, 'B+' , 'platelets'      , '2025-12-10', '2099-09-09', 'No Issues', 6, 1, 4),
-(4, 'AB+', 'plasma'         , '2025-01-25', '2099-09-09', 'No Issues', 7, 1, 4),
-(4, 'B-' , 'cryoprecipitate', '2025-04-25', '2099-09-09', 'No Issues', 2, 1, 4);
+(25, 'A-' , 'red blood cells', '2025-03-30', '2099-09-09', 'No Issues', 5, 1, 4),
+(26, 'B+' , 'platelets'      , '2025-12-10', '2099-09-09', 'No Issues', 6, 1, 4),
+(27, 'AB+', 'plasma'         , '2025-01-25', '2099-09-09', 'No Issues', 7, 1, 4),
+(28, 'B-' , 'cryoprecipitate', '2025-04-25', '2099-09-09', 'No Issues', 2, 1, 4);
 
 -- INSERT Hospital Records
-INSERT INTO hospitals (hospital_id, hospital_name, street_address, city, region, contact_number, branch_id)
+INSERT INTO hospitals (hospital_id, hospital_name, street_address, city, region, contact_number)
 VALUES 
-(1, 'Pines Standing Hospital'    , '999 Trese Street'  , 'Manila'     , 'Region A', '0012345', 1),
-(2, 'Mors Central Hospital'      , '111 Koffine Street', 'Pasay'      , 'Region B', '0067890', 2),
-(3, 'Silis Hospital'             , '455 El Street'     , 'Makati'     , 'Region C', '0013579', 3),
-(4, 'Simpleston General Hospital', '119 Samps Street'  , 'Sample City', 'Region D', '0024680', 4);
+(1, 'Pines Standing Hospital'    , '999 Trese Street'  , 'Manila'     , 'Region A', '0012345'),
+(2, 'Mors Central Hospital'      , '111 Koffine Street', 'Pasay'      , 'Region B', '0067890'),
+(3, 'Silis Hospital'             , '455 El Street'     , 'Makati'     , 'Region C', '0013579'),
+(4, 'Simpleston General Hospital', '119 Samps Street'  , 'Sample City', 'Region D', '0024680');
 
 
