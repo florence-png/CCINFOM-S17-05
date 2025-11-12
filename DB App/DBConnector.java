@@ -25,5 +25,6 @@ public class DBConnector {
 
         // Open a connection
         return DriverManager.getConnection(DB_URL, USER, PASS);
+
     }
 }

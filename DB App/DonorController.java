@@ -6,7 +6,7 @@ import java.sql.Date; // Needed for interacting with the Donor model
 public class DonorController implements ActionListener {
 
     private DonorGUI donorGUI;
-    // private DonorData donorModel; // Future: This will be your JDBC/Model class
+    // private DonorData donorModel; // note: soon to be JDBC/Model class
 
     /**
      * Constructor for the Donor Controller.
@@ -14,7 +14,7 @@ public class DonorController implements ActionListener {
      */
     public DonorController(DonorGUI donorGUI /*, DonorData donorModel */) {
         this.donorGUI = donorGUI;
-        // this.donorModel = donorModel; // Future
+        // this.donorModel = donorModel; // to be made
 
         addListeners();
     }
@@ -30,8 +30,7 @@ public class DonorController implements ActionListener {
         donorGUI.getBtnViewHistory().addActionListener(this);
         donorGUI.getBtnReturn().addActionListener(this);
 
-        // Sub-Panel Buttons (e.g., the Submit button on the Add form)
-        // donorGUI.getBtnSubmitAddDonor().addActionListener(this); // You would add this later
+        // donorGUI.getBtnSubmitAddDonor().addActionListener(this); // to add later
     }
 
     /**
@@ -64,11 +63,11 @@ public class DonorController implements ActionListener {
 
             case "DONOR_RETURN_MAIN":
                 System.out.println("Action: Returning to Main Menu.");
-                // Future: This would call the main MenuController or change the main JFrame's card.
+                // call menuController
                 break;
 
             case "DONOR_SUBMIT_ADD":
-                // handleAddDonor(); // Future: This method will call the DonorModel (JDBC)
+                // handleAddDonor();
                 JOptionPane.showMessageDialog(donorGUI, "Submit button placeholder clicked.");
                 break;
 
@@ -78,7 +77,7 @@ public class DonorController implements ActionListener {
         }
     }
 
-    // Future: Method to call the model to save data
+    // method to call the model to save data
     /*
     private void handleAddDonor() {
         // 1. Get data from the form (e.g., donorGUI.getLastNameInput())

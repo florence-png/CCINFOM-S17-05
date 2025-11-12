@@ -35,26 +35,25 @@ public class DonorGUI extends JPanel {
         cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);
 
-        // --- 1. Build the main menu panel ---
+        // --- Build the main menu panel ---
         donorMenuPanel = createDonorMenuPanel();
 
-        // --- 2. Build the function panels (placeholders for now) ---
+        // --- function panels  ---
         addDonorPanel = createAddDonorPanel();
         viewEditDonorPanel = createPlaceholderPanel("View/Edit Donor Panel");
         searchDonorPanel = createPlaceholderPanel("Search Donor Panel");
         historyDonorPanel = createPlaceholderPanel("Donation History Panel");
 
-        // --- 3. Add all panels to the CardLayout ---
+        // --- add all panels to the CardLayout ---
         cardPanel.add(donorMenuPanel, "MENU");
         cardPanel.add(addDonorPanel, "ADD_FORM");
         cardPanel.add(viewEditDonorPanel, "VIEW_EDIT");
         cardPanel.add(searchDonorPanel, "SEARCH");
         cardPanel.add(historyDonorPanel, "HISTORY");
 
-        // Add the card panel to the center of DonorGUI
         this.add(cardPanel, BorderLayout.CENTER);
 
-        // Show the initial panel
+        // show initial panel
         showPanel("MENU");
     }
 
@@ -65,7 +64,6 @@ public class DonorGUI extends JPanel {
         JPanel panel = new JPanel(new GridLayout(6, 1, 10, 10)); // 6 rows for buttons + padding
         panel.setBorder(BorderFactory.createEmptyBorder(50, 200, 50, 200));
 
-        // Create and set Action Commands for the controller
         btnAddRecord = new JButton("Add New Donor Record");
         btnAddRecord.setActionCommand("DONOR_ADD");
 
@@ -81,13 +79,11 @@ public class DonorGUI extends JPanel {
         btnReturn = new JButton("Return to Main Menu");
         btnReturn.setActionCommand("DONOR_RETURN_MAIN");
 
-
-        // Add buttons
         panel.add(btnAddRecord);
         panel.add(btnViewEditRecord);
         panel.add(btnSearchDonor);
         panel.add(btnViewHistory);
-        panel.add(new JLabel("")); // Spacer
+        panel.add(new JLabel("")); // spacer
         panel.add(btnReturn);
 
         return panel;
@@ -97,30 +93,25 @@ public class DonorGUI extends JPanel {
      * Creates the panel where the Add Donor form will go.
      */
     private JPanel createAddDonorPanel() {
-        // This panel will contain all your input fields matching the Donor model
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Placeholder form layout (replace with detailed field creation later)
         JPanel formPanel = new JPanel(new GridLayout(10, 2, 10, 10)); // 10 fields (including ID/Remarks)
 
-        // Example Field: Last Name
         formPanel.add(new JLabel("Last Name:"));
         formPanel.add(new JTextField(20));
 
-        // Example Field: Sex (using JComboBox)
         formPanel.add(new JLabel("Sex:"));
         formPanel.add(new JComboBox<>(new String[]{"Male", "Female"}));
 
-        // Example Field: Blood Type (using JComboBox)
         formPanel.add(new JLabel("Blood Type:"));
         formPanel.add(new JComboBox<>(new String[]{"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"}));
 
-        // Add other fields: First Name, Contact Number, Age, Birthdate, Remarks...
+        // to add fields "First Name", Contact Number, Age, Birthdate, Remarks...
 
         panel.add(formPanel, BorderLayout.NORTH);
 
-        // Back Button for the form (needs a getter later for the controller)
+        // back Button for the form (needs a getter later for the controller)
         JButton btnSubmit = new JButton("Submit Record");
         btnSubmit.setActionCommand("DONOR_SUBMIT_ADD");
 
@@ -132,9 +123,6 @@ public class DonorGUI extends JPanel {
         return panel;
     }
 
-    /**
-     * Helper method to create simple placeholder panels.
-     */
     private JPanel createPlaceholderPanel(String name) {
         JPanel panel = new JPanel(new BorderLayout());
         JLabel label = new JLabel(name, SwingConstants.CENTER);
@@ -144,7 +132,7 @@ public class DonorGUI extends JPanel {
     }
 
     /**
-     * Method for the Controller to switch views.
+     * helper method for the controller to switch views
      */
     public void showPanel(String panelName) {
         cardLayout.show(cardPanel, panelName);
