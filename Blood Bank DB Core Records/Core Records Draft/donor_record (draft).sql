@@ -42,9 +42,9 @@ SELECT * FROM Donor WHERE donor_id = 1;
 -- View donors with O+ blood type
 SELECT * FROM Donor WHERE blood_type = 'O+';
 
-
-
+-- ==========================================================
 -- Branch and Appointment Section (Scheduling an Appointment)
+-- ==========================================================
 
 -- Create Branch table
 CREATE TABLE IF NOT EXISTS Branch(
@@ -99,11 +99,9 @@ UPDATE Branch
 SET total_slots = total_slots - 1
 WHERE branch_id = 1;
 
-
-
--- =====================================================================
+-- ===================================================
 -- Blood Inventory and Donation History Report Section
--- =====================================================================
+-- ===================================================
 
 -- Create Blood Inventory table
 CREATE TABLE IF NOT EXISTS BloodInventory(
