@@ -16,19 +16,15 @@ public class Hospital {
     public int getHospital_id() {
         return hospital_id;
     }
-
     public String getName() {
         return name;
     }
-
     public String getAddress() {
         return address;
     }
-
     public String getCity() {
         return city;
     }
-
     public String getContact_number() {
         return contact_number;
     }

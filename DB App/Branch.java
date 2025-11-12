@@ -14,15 +14,12 @@ public class Branch {
     public int getBranchId() {
         return branchId;
     }
-
     public String getName() {
         return name;
     }
-
     public String getLocation() {
         return location;
     }
-
     public String getContactNumber() {
         return contactNumber;
     }
