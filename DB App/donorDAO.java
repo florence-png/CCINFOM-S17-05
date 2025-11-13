@@ -9,7 +9,7 @@ public class DonorDAO{ // Adds a new donor to the database
         String sql = "INSERT INTO Donor (last_name, first_name, contact_info, age, sex, date_of_birth, blood_type, remarks) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try(Connection conn = DBConnector.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)){
+            PreparedStatement stmt = conn.prepareStatement(sql)){
 
             stmt.setString(1, lastName);
             stmt.setString(2, firstName);
@@ -35,7 +35,7 @@ public void updateDonor(int donorId, String lastName, String firstName, String c
     String sql = "UPDATE Donor SET last_name=?, first_name=?, contact_info=?, age=?, sex=?, date_of_birth=?, blood_type=?, remarks=? WHERE donor_id=?";
 
     try(Connection conn = DBConnector.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)){
+        PreparedStatement stmt = conn.prepareStatement(sql)){
 
         stmt.setString(1, lastName);
         stmt.setString(2, firstName);
@@ -59,7 +59,7 @@ public void updateDonor(int donorId, String lastName, String firstName, String c
 public Donor getDonorById(int donorId){ // Search donor by ID
     String sql = "SELECT * FROM Donor WHERE donor_id = ?";
     try(Connection conn = DBConnector.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)){
+        PreparedStatement stmt = conn.prepareStatement(sql)){
 
         stmt.setInt(1, donorId);
         ResultSet rs = stmt.executeQuery();
@@ -89,7 +89,7 @@ public List<Donor> searchDonorByName(String name){ // Search donors by name
     List<Donor> donors = new ArrayList<>();
 
     try (Connection conn = DBConnector.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
 
         stmt.setString(1, "%" + name + "%");
         stmt.setString(2, "%" + name + "%");
@@ -120,8 +120,8 @@ public List<Donor> getAllDonors() { // Show all donors
     List<Donor> donors = new ArrayList<>();
 
     try(Connection conn = DBConnector.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()){
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()){
 
         while(rs.next()){
             donors.add(new Donor(
@@ -142,3 +142,4 @@ public List<Donor> getAllDonors() { // Show all donors
     }
     return donors;
 }
+
