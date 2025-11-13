@@ -1,21 +1,20 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date; // Needed for interacting with the Donor model
 
 public class DonorController implements ActionListener {
 
     private DonorGUI donorGUI;
-    // private DonorData donorModel; // note: soon to be JDBC/Model class
+    private JPanel mainCardPanel;
 
     /**
      * Constructor for the Donor Controller.
      * Takes the DonorGUI instance to attach listeners to its components.
      */
-    public DonorController(DonorGUI donorGUI /*, DonorData donorModel */) {
+    public DonorController(DonorGUI donorGUI, JPanel mainCardPanel) {
         this.donorGUI = donorGUI;
-        // this.donorModel = donorModel; // to be made
-
+        this.mainCardPanel = mainCardPanel;
         addListeners();
     }
 
@@ -26,67 +25,77 @@ public class DonorController implements ActionListener {
         // Main Donor Menu Buttons
         donorGUI.getBtnAddRecord().addActionListener(this);
         donorGUI.getBtnViewEditRecord().addActionListener(this);
-        donorGUI.getBtnSearchDonor().addActionListener(this);
-        donorGUI.getBtnViewHistory().addActionListener(this);
         donorGUI.getBtnReturn().addActionListener(this);
 
-        // donorGUI.getBtnSubmitAddDonor().addActionListener(this); // to add later
+        donorGUI.getBtnSubmitAddDonor().addActionListener(this);
+
+        donorGUI.getBtnAddReturn().addActionListener(this);
+        donorGUI.getBtnViewEditReturn().addActionListener(this);
     }
 
-    /**
-     * Handles all button clicks from the DonorGUI and directs the application flow.
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
         switch (command) {
+            // --- Donor Menu GUI  ---
             case "DONOR_ADD":
-                System.out.println("Action: Displaying Add Donor Form.");
                 donorGUI.showPanel("ADD_FORM");
                 break;
 
             case "DONOR_VIEW_EDIT":
-                System.out.println("Action: Displaying View/Edit Donor Records.");
                 donorGUI.showPanel("VIEW_EDIT");
                 break;
 
             case "DONOR_SEARCH":
-                System.out.println("Action: Displaying Search Donor Interface.");
                 donorGUI.showPanel("SEARCH");
                 break;
 
             case "DONOR_HISTORY":
-                System.out.println("Action: Displaying Donation History.");
                 donorGUI.showPanel("HISTORY");
                 break;
 
-            case "DONOR_RETURN_MAIN":
-                System.out.println("Action: Returning to Main Menu.");
-                // call menuController
+            // --- Add Donor ---
+            case "DONOR_RETURN":
+                // Go back to the local Donor Menu
+                donorGUI.showPanel("MENU");
                 break;
 
             case "DONOR_SUBMIT_ADD":
-                // handleAddDonor();
-                JOptionPane.showMessageDialog(donorGUI, "Submit button placeholder clicked.");
+                saveDonorData();
+                break;
+
+            // --- External Navigation (Back to Main Menu) ---
+            case "DONOR_RETURN_MAIN":
+                CardLayout cl = (CardLayout) mainCardPanel.getLayout();
+                cl.show(mainCardPanel, "MENU");
                 break;
 
             default:
-                System.out.println("[DONOR CONTROLLER] Unhandled command: " + command);
+                System.out.println("Unknown command: " + command);
                 break;
         }
     }
 
-    // method to call the model to save data
-    /*
-    private void handleAddDonor() {
-        // 1. Get data from the form (e.g., donorGUI.getLastNameInput())
-        String lastName = donorGUI.getLastNameInput();
-        // 2. Validate data
-        // 3. Create Donor object
-        Donor newDonor = new Donor(lastName, ...);
-        // 4. Call model to save
-        // donorModel.saveDonor(newDonor);
+    private void saveDonorData() {
+        // 1. Get Data from GUI
+        String lName = donorGUI.getTxtLastName().getText();
+        String fName = donorGUI.getTxtFirstName().getText();
+
+        // 2. Validate
+        if (lName.isEmpty() || fName.isEmpty()) {
+            JOptionPane.showMessageDialog(donorGUI, "Please enter First and Last Name.");
+            return;
+        }
+
+        // 3. Success Simulation
+        JOptionPane.showMessageDialog(donorGUI, "Success! Donor " + fName + " " + lName + " added.");
+
+        // 4. Return to Donor Menu
+        donorGUI.showPanel("MENU");
+
+        // 5. Clear fields (Optional helper method could go here)
+        donorGUI.getTxtFirstName().setText("");
+        donorGUI.getTxtLastName().setText("");
     }
-    */
 }

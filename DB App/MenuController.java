@@ -5,27 +5,16 @@ import java.awt.event.ActionListener;
 
 public class MenuController implements ActionListener {
 
-    // Call MenuGUI
     private MenuGUI menuGUI;
-    private DonorGUI donorGUI;
+    private JPanel mainCardPanel;
 
-    /**
-     * The constructor. It takes the View as a parameter
-     * so it can connect to it.
-     */
-    public MenuController(MenuGUI menuGUI) {
+    public MenuController(MenuGUI menuGUI, JPanel mainCardPanel ) {
         this.menuGUI = menuGUI;
-
-        // Call the method to attach all listeners
+        this.mainCardPanel = mainCardPanel;
         addListeners();
     }
 
-    /**
-     * This private method attaches THIS controller
-     * as the listener for all buttons in the view.
-     */
     private void addListeners() {
-        // Use the view's getters to access the buttons and add this controller as the listener
         menuGUI.getBtnDonorManagement().addActionListener(this);
         menuGUI.getBtnTechnicianManagement().addActionListener(this);
         menuGUI.getBtnBloodInventory().addActionListener(this);
@@ -42,11 +31,9 @@ public class MenuController implements ActionListener {
 
         switch (command) {
             case "BTN_DONOR_MGMT":
-                JOptionPane.showMessageDialog(menuGUI.getRootPanel(), "Donor Management Clicked!");
-                // Future: new DonorController(new DonorView(), ...);
-                DonorController donorController = new DonorController(donorGUI);
+                CardLayout cl = (CardLayout) (mainCardPanel.getLayout());
+                cl.show(mainCardPanel, "DONOR_GUI");
                 break;
-
             case "BTN_TECH_MGMT":
                 JOptionPane.showMessageDialog(menuGUI.getRootPanel(), "Technician Management Clicked!");
                 break;

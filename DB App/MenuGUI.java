@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class MenuGUI extends JFrame {
-    private JPanel PanelMenu; // Main root panel
-
+public class MenuGUI extends JPanel {
     private JButton BtnDonorManagement;
     private JButton BtnTechnicianManagement;
     private JButton btnBloodInventory;
@@ -14,29 +12,22 @@ public class MenuGUI extends JFrame {
     private JButton btnExit;
 
     public MenuGUI() {
-        super("Blood Bank Management System");
-
-        this.setSize(400, 500);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
-        this.setResizable(false);
-
-        // menu Main panel
-        PanelMenu = new JPanel(new BorderLayout(5, 5));
+        // menu panel
+        this.setLayout(new BorderLayout(5, 5));
 
         // Title
         JPanel PanelTitle = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
         JLabel LabelTitle = new JLabel("Blood Bank Management System");
         LabelTitle.setFont(new Font("SansSerif", Font.BOLD, 20));
         PanelTitle.add(LabelTitle);
-        PanelMenu.add(PanelTitle, BorderLayout.NORTH);
+        this.add(PanelTitle, BorderLayout.NORTH);
 
         // Buttons panel
         JPanel PanelButtons = new JPanel();
         PanelButtons.setLayout(new GridLayout(8, 1, 5, 5));
         PanelButtons.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 
-        // Create and set up all your buttons
+        // Menu Buttons
         BtnDonorManagement = new JButton("Donor Management");
         BtnDonorManagement.setActionCommand("BTN_DONOR_MGMT");
 
@@ -71,15 +62,13 @@ public class MenuGUI extends JFrame {
         PanelButtons.add(btnReports);
         PanelButtons.add(btnExit);
 
-        // Add the button panel to the center
-        PanelMenu.add(PanelButtons, BorderLayout.CENTER);
-
-        this.setContentPane(PanelMenu);
+        // Add button panel to the center
+        this.add(PanelButtons, BorderLayout.CENTER);
     }
 
     // Getters
     public JPanel getRootPanel() {
-        return PanelMenu;
+        return this;
     }
     public JButton getBtnDonorManagement() {
         return BtnDonorManagement;
