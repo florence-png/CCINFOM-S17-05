@@ -1,67 +1,63 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class DonorGUI extends JPanel {
+public class TechnicianGUI extends JPanel {
     // Layout Management
     private JPanel cardPanel;
     private CardLayout cardLayout;
 
-    // Donor Menu Buttons
+    // Technician Menu Buttons
     private JButton btnAddRecord;
     private JButton btnViewEditRecord;
     private JButton btnReturn;
 
     // Sub-Panels (for different functions)
-    private JPanel donorMenuPanel;
-    private JPanel addDonorPanel;
-    private JPanel viewEditDonorPanel;
+    private JPanel technicianMenuPanel;
+    private JPanel addTechnicianPanel;
+    private JPanel viewEditTechnicianPanel;
 
-    // --- "Add Donor" Components ---
+    // --- "Add Technician" Components ---
     private JTextField txtLastName;
     private JTextField txtFirstName;
     private JTextField txtEmail;
     private JTextField txtContactNumber;
     private JTextField txtAge;
     private JComboBox<String> comboSex;
-    private JTextField txtBirthdate;
-    private JComboBox<String> comboBloodType;
-    private JTextArea txtRemarks;
-    private JButton btnSubmitAddDonor;
+    private JTextField txtDateEmployed;
+    private JButton btnSubmitAddTechnician;
     private JButton btnAddReturn;
 
-    // --- "View/Edit Donor" Components ---
+    // --- "View/Edit Technician" Components ---
     private JTextField txtSearch; // The search text field
     private JButton btnSearch; // The "Search" button
     private JButton btnRefreshList; // The "Refresh" button
-    private JPanel donorListPanel;
+    private JPanel technicianListPanel;
     private JButton btnViewEditReturn; // Return button for this panel
 
-    // Getters - Donor Menu Buttons
+    // Getters - Technician Menu Buttons
     public JButton getBtnAddRecord() { return btnAddRecord; }
     public JButton getBtnViewEditRecord() { return btnViewEditRecord; }
     public JButton getBtnReturn() { return btnReturn; }
 
-    // Getters - Add Donor Components
+    // Getters - Add Technician Components
     public JTextField getTxtLastName() { return txtLastName; }
     public JTextField getTxtFirstName() { return txtFirstName; }
     public JTextField getTxtEmail() { return txtEmail; }
     public JTextField getTxtContactNumber() { return txtContactNumber; }
     public JTextField getTxtAge() { return txtAge; }
     public JComboBox<String> getComboSex() { return comboSex; }
-    public JTextField getTxtBirthdate() { return txtBirthdate; }
-    public JComboBox<String> getComboBloodType() { return comboBloodType; }
-    public JTextArea getTxtRemarks() { return txtRemarks; }
-    public JButton getBtnSubmitAddDonor() { return btnSubmitAddDonor; }
+    public JTextField getTxtDateEmployed() { return txtDateEmployed; }
+    public JButton getBtnSubmitAddTechnician() { return btnSubmitAddTechnician; }
     public JButton getBtnAddReturn() { return btnAddReturn; }
 
-    // Getters - View/Edit Donor Components
+    // Getters - View/Edit Technician Components
     public JButton getBtnViewEditReturn() { return btnViewEditReturn; }
     public JTextField getTxtSearch() { return txtSearch; }
     public JButton getBtnSearch() { return btnSearch; }
     public JButton getBtnRefreshList() { return btnRefreshList; }
-    public JPanel getDonorListPanel() { return donorListPanel; }
+    public JPanel getTechnicianListPanel() { return technicianListPanel; }
 
-    public DonorGUI() {
+    public TechnicianGUI() {
         this.setLayout(new BorderLayout());
 
         cardPanel = new JPanel();
@@ -69,16 +65,16 @@ public class DonorGUI extends JPanel {
         cardPanel.setLayout(cardLayout);
 
         // --- Main menu panel ---
-        donorMenuPanel = createDonorMenuPanel();
+        technicianMenuPanel = createTechnicianMenuPanel();
 
         // --- function panels  ---
-        addDonorPanel = createAddDonorPanel();
-        viewEditDonorPanel = createViewEditDonorPanel();
+        addTechnicianPanel = createAddTechnicianPanel();
+        viewEditTechnicianPanel = createViewEditTechnicianPanel();
 
         // --- add all panels to the CardLayout ---
-        cardPanel.add(donorMenuPanel, "MENU");
-        cardPanel.add(addDonorPanel, "ADD_FORM");
-        cardPanel.add(viewEditDonorPanel, "VIEW_EDIT");
+        cardPanel.add(technicianMenuPanel, "MENU");
+        cardPanel.add(addTechnicianPanel, "ADD_FORM");
+        cardPanel.add(viewEditTechnicianPanel, "VIEW_EDIT");
 
         this.add(cardPanel, BorderLayout.CENTER);
 
@@ -86,22 +82,22 @@ public class DonorGUI extends JPanel {
         showPanel("MENU");
     }
 
-    /****** Donor Menu panel ******/
-    private JPanel createDonorMenuPanel() {
+    /****** Technician Menu panel ******/
+    private JPanel createTechnicianMenuPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
 
         // Header
-        panel.add(createHeader("Donor Menu Panel"), BorderLayout.NORTH);
+        panel.add(createHeader("Technician Menu Panel"), BorderLayout.NORTH);
 
         JPanel centerButtons = new JPanel(new GridLayout(1, 2, 10, 10));
         centerButtons.setBorder(BorderFactory.createEmptyBorder(70, 0, 70, 0));
 
-        btnAddRecord = new JButton("Add New Donor Record");
-        btnAddRecord.setActionCommand("DONOR_ADD");
+        btnAddRecord = new JButton("Add New Technician Record");
+        btnAddRecord.setActionCommand("TECHNICIAN_ADD");
 
-        btnViewEditRecord = new JButton("View/Edit Donor Record");
-        btnViewEditRecord.setActionCommand("DONOR_VIEW_EDIT");
+        btnViewEditRecord = new JButton("View/Edit Technician Record");
+        btnViewEditRecord.setActionCommand("TECHNICIAN_VIEW_EDIT");
 
         centerButtons.add(btnAddRecord);
         centerButtons.add(btnViewEditRecord);
@@ -111,7 +107,7 @@ public class DonorGUI extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
         btnReturn = new JButton("Return to Main Menu");
-        btnReturn.setActionCommand("DONOR_RETURN_MAIN");
+        btnReturn.setActionCommand("TECHNICIAN_RETURN_MAIN");
         buttonPanel.add(btnReturn);
 
         panel.add(buttonPanel, BorderLayout.SOUTH);
@@ -119,27 +115,23 @@ public class DonorGUI extends JPanel {
         return panel;
     }
 
-    /****** Add donor panel  ******/
-    private JPanel createAddDonorPanel() {
+    /****** Add technician panel  ******/
+    private JPanel createAddTechnicianPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40)); // Padding
 
         // Header
-        panel.add(createHeader("Add Donor Panel"), BorderLayout.NORTH);
+        panel.add(createHeader("Add Technician Panel"), BorderLayout.NORTH);
 
         // Forms Panel
-        JPanel formPanel = new JPanel(new GridLayout(9, 2, 10, 10));
+        JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 10));
         txtLastName = new JTextField();
         txtFirstName = new JTextField();
         txtEmail = new JTextField();
         txtContactNumber = new JTextField();
         txtAge = new JTextField();
         comboSex = new JComboBox<>(new String[]{"Male", "Female"});
-        txtBirthdate = new JTextField();
-        comboBloodType = new JComboBox<>(new String[]{"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"});
-        txtRemarks = new JTextArea(3, 20);
-        txtRemarks.setLineWrap(true);
-        JScrollPane scrollRemarks = new JScrollPane(txtRemarks); // Scroll pane for remarks
+        txtDateEmployed = new JTextField();
 
         formPanel.add(new JLabel("Last Name:"));
         formPanel.add(txtLastName);
@@ -156,27 +148,21 @@ public class DonorGUI extends JPanel {
         formPanel.add(new JLabel("Sex:"));
         formPanel.add(comboSex);
 
-        formPanel.add(new JLabel("Birthdate (YYYY-MM-DD):"));
-        formPanel.add(txtBirthdate);
-
-        formPanel.add(new JLabel("Blood Type:"));
-        formPanel.add(comboBloodType);
-
-        formPanel.add(new JLabel("Remarks:"));
-        formPanel.add(scrollRemarks);
+        formPanel.add(new JLabel("Date Employed (YYYY-MM-DD):"));
+        formPanel.add(txtDateEmployed);
 
         panel.add(formPanel, BorderLayout.CENTER);
 
         // Buttons Panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
-        btnSubmitAddDonor = new JButton("Save Record");
-        btnSubmitAddDonor.setActionCommand("DONOR_SUBMIT_ADD");
+        btnSubmitAddTechnician = new JButton("Save Record");
+        btnSubmitAddTechnician.setActionCommand("TECHNICIAN_SUBMIT_ADD");
 
         btnAddReturn = new JButton("Return");
-        btnAddReturn.setActionCommand("DONOR_RETURN");
+        btnAddReturn.setActionCommand("TECHNICIAN_RETURN");
 
-        buttonPanel.add(btnSubmitAddDonor);
+        buttonPanel.add(btnSubmitAddTechnician);
         buttonPanel.add(btnAddReturn);
 
         panel.add(buttonPanel, BorderLayout.SOUTH);
@@ -184,7 +170,7 @@ public class DonorGUI extends JPanel {
         return panel;
     }
 
-    private JPanel createViewEditDonorPanel() {
+    private JPanel createViewEditTechnicianPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
 
@@ -192,14 +178,14 @@ public class DonorGUI extends JPanel {
         JPanel topPanel = new JPanel(new BorderLayout());
 
         // header
-        topPanel.add(createHeader("View/Edit Donor Record"), BorderLayout.NORTH);
+        topPanel.add(createHeader("View/Edit Technician Record"), BorderLayout.NORTH);
 
         // search panel
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         JLabel lblSearch = new JLabel("Search by ID/Name:");
         txtSearch = new JTextField(20);
         btnSearch = new JButton("Search");
-        btnSearch.setActionCommand("DONOR_SEARCH_LIST");
+        btnSearch.setActionCommand("TECHNICIAN_SEARCH_LIST");
 
         searchPanel.add(lblSearch);
         searchPanel.add(txtSearch);
@@ -209,27 +195,27 @@ public class DonorGUI extends JPanel {
         panel.add(topPanel, BorderLayout.NORTH);
 
         // scrollable list
-        donorListPanel = new JPanel();
-        donorListPanel.setLayout(new BoxLayout(donorListPanel, BoxLayout.Y_AXIS));
-        donorListPanel.setBackground(Color.WHITE);
+        technicianListPanel = new JPanel();
+        technicianListPanel.setLayout(new BoxLayout(technicianListPanel, BoxLayout.Y_AXIS));
+        technicianListPanel.setBackground(Color.WHITE);
 
-        JScrollPane scrollPane = new JScrollPane(donorListPanel);
+        JScrollPane scrollPane = new JScrollPane(technicianListPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
-        // TODO: add name and buttons
-
         panel.add(scrollPane, BorderLayout.CENTER);
+
+        // TODO: add name and buttons
 
         // buttons panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         btnRefreshList = new JButton("Refresh List");
-        btnRefreshList.setActionCommand("DONOR_REFRESH_LIST");
+        btnRefreshList.setActionCommand("TECHNICIAN_REFRESH_LIST");
 
         btnViewEditReturn = new JButton("Return");
-        btnViewEditReturn.setActionCommand("DONOR_RETURN");
+        btnViewEditReturn.setActionCommand("TECHNICIAN_RETURN");
 
         buttonPanel.add(btnRefreshList);
         buttonPanel.add(btnViewEditReturn);

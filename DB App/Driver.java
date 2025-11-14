@@ -16,14 +16,17 @@ public class Driver {
             // Initialize GUIs
             MenuGUI menuGUI = new MenuGUI();
             DonorGUI donorGUI = new DonorGUI();
+            TechnicianGUI technicianGUI = new TechnicianGUI();
 
             // Add GUIs to main CardLayout panel
             mainCardPanel.add(menuGUI, "MENU");
             mainCardPanel.add(donorGUI, "DONOR_GUI");
+            mainCardPanel.add(technicianGUI, "TECHNICIAN_GUI");
 
             // Controllers
             MenuController menuController = new MenuController(menuGUI, mainCardPanel);
             DonorController donorController = new DonorController(donorGUI, mainCardPanel);
+            TechnicianController technicianController = new TechnicianController(technicianGUI, mainCardPanel);
 
             // Show the main frame
             mainFrame.setContentPane(mainCardPanel);

@@ -36,6 +36,7 @@ public class DonorController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+        CardLayout cl;
 
         switch (command) {
             // --- Donor Menu GUI  ---
@@ -55,19 +56,19 @@ public class DonorController implements ActionListener {
                 donorGUI.showPanel("HISTORY");
                 break;
 
-            // --- Add Donor ---
             case "DONOR_RETURN":
                 // Go back to the local Donor Menu
                 donorGUI.showPanel("MENU");
                 break;
 
+            // --- Add Donor ---
             case "DONOR_SUBMIT_ADD":
                 saveDonorData();
                 break;
 
             // --- External Navigation (Back to Main Menu) ---
             case "DONOR_RETURN_MAIN":
-                CardLayout cl = (CardLayout) mainCardPanel.getLayout();
+                cl = (CardLayout) mainCardPanel.getLayout();
                 cl.show(mainCardPanel, "MENU");
                 break;
 

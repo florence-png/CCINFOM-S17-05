@@ -28,19 +28,19 @@ public class MenuController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-
+        CardLayout cl;
         switch (command) {
             case "BTN_DONOR_MGMT":
-                CardLayout cl = (CardLayout) (mainCardPanel.getLayout());
+                cl = (CardLayout) (mainCardPanel.getLayout());
                 cl.show(mainCardPanel, "DONOR_GUI");
                 break;
             case "BTN_TECH_MGMT":
-                JOptionPane.showMessageDialog(menuGUI.getRootPanel(), "Technician Management Clicked!");
+                cl = (CardLayout) (mainCardPanel.getLayout());
+                cl.show(mainCardPanel, "TECHNICIAN_GUI");
                 break;
-
             case "BTN_INV_MGMT":
-                JOptionPane.showMessageDialog(menuGUI.getRootPanel(), "Blood Inventory Clicked!");
-                break;
+                cl = (CardLayout) (mainCardPanel.getLayout());
+                cl.show(mainCardPanel, "INVENTORY_GUI");
 
             case "BTN_BRANCH_MGMT":
                 JOptionPane.showMessageDialog(menuGUI.getRootPanel(), "Branch Management Clicked!");
