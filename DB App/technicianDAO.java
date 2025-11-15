@@ -3,76 +3,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TechnicianDAO{
-    public void addTechnician(int technicianId, String lastName, String firstName, String contactNumber, int donorId){ // Add a new technician
-        String sql = "INSERT INTO technicians (technician_id, last_name, first_name, contact_number, donor_id) VALUES (?, ?, ?, ?, ?)";
+    public void addTechnician(String lastName, String firstName, String contactNumber, Integer donorId){ // donorId can be null
+        String sql = "INSERT INTO technicians (last_name, first_name, contact_number, donor_id, status) " + "VALUES (?, ?, ?, ?, 'Active')";
         try(Connection conn = DBConnector.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
-            stmt.setInt(1, technicianId);
-            stmt.setString(2, lastName);
-            stmt.setString(3, firstName);
-            stmt.setString(4, contactNumber);
-            stmt.setInt(5, donorId);
-            stmt.executeUpdate();
-            System.out.println("Technician added successfully!");
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
 
-    public Technician getTechnicianById(int technicianId){ // Get technician by ID
-        String sql = "SELECT * FROM technicians WHERE technician_id=?";
-        try(Connection conn = DBConnector.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
-            stmt.setInt(1, technicianId);
-            ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
-                return new Technician(
-                        rs.getInt("technician_id"),
-                        rs.getString("last_name"),
-                        rs.getString("first_name"),
-                        rs.getString("contact_number"),
-                        rs.getInt("donor_id")
-                );
-            }
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public void updateTechnician(int technicianId, String lastName, String firstName, String contactNumber, int donorId){ // Update technician
-        String sql = "UPDATE technicians SET last_name=?, first_name=?, contact_number=?, donor_id=? WHERE technician_id=?";
-        try(Connection conn = DBConnector.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, lastName);
             stmt.setString(2, firstName);
             stmt.setString(3, contactNumber);
-            stmt.setInt(4, donorId);
-            stmt.setInt(5, technicianId);
+
+            if(donorId == null){
+                stmt.setNull(4, Types.INTEGER);
+            }
+            else{
+                stmt.setInt(4, donorId);
+            }
+            
             stmt.executeUpdate();
-            System.out.println("Technician updated successfully!");
+            System.out.println("Technician added successfully!");
         }
         catch(SQLException e){
             e.printStackTrace();
         }
     }
 
-    public List<Technician> getAllTechnicians(){ // View all technicians
+    public List<Technician> getAllTechnicians(){ // Active and Inactive only
         List<Technician> list = new ArrayList<>();
-        String sql = "SELECT * FROM technicians";
+        String sql = "SELECT * FROM technicians WHERE status != 'Deleted'";
+
         try(Connection conn = DBConnector.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()){
+
             while(rs.next()){
-                list.add(new Technician(
-                        rs.getInt("technician_id"),
-                        rs.getString("last_name"),
-                        rs.getString("first_name"),
-                        rs.getString("contact_number"),
-                        rs.getInt("donor_id")
-                ));
+                Technician t = new Technician(
+                    rs.getInt("technician_id"),
+                    rs.getString("last_name"),
+                    rs.getString("first_name"),
+                    rs.getString("contact_number"),
+                    rs.getObject("donor_id") == null ? null : rs.getInt("donor_id"),
+                    rs.getString("status")
+                );
+                list.add(t);
             }
         }
         catch(SQLException e){
@@ -81,27 +53,46 @@ public class TechnicianDAO{
         return list;
     }
 
-    public List<String[]> getTechnicianAssignments(){ // View technician assignments
-        List<String[]> list = new ArrayList<>();
-        String sql = "SELECT t.technician_id, t.last_name, t.first_name, t.contact_number, " +
-                     "d.donor_id, d.first_name AS donor_first, d.last_name AS donor_last " +
-                     "FROM technicians t LEFT JOIN Donor d ON t.donor_id = d.donor_id";
+    public void setTechnicianStatus(int technicianId, String newStatus){ // Active, Inactive, Deleted status
+        String sql = "UPDATE technicians SET status = ? WHERE technician_id = ?";
+
         try(Connection conn = DBConnector.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()){
-            while(rs.next()){
-                String[] row = {
-                        String.valueOf(rs.getInt("technician_id")),
-                        rs.getString("last_name"),
-                        rs.getString("first_name"),
-                        rs.getString("contact_number"),
-                        rs.getString("donor_first"),
-                        rs.getString("donor_last")
-                };
-                list.add(row);
-            }
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, technicianId);
+            stmt.executeUpdate();
         }
         catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public List<Technician> searchTechnicians(String keyword){ // search by first name or last name
+        List<Technician> list = new ArrayList<>();
+        String sql = "SELECT * FROM technicians WHERE status != 'Deleted' AND (first_name LIKE ? OR last_name LIKE ?)";
+
+        try(Connection conn = DBConnector.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+
+            stmt.setString(1, "%" + keyword + "%");
+            stmt.setString(2, "%" + keyword + "%");
+        
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                Technician t = new Technician(
+                    rs.getInt("technician_id"),
+                    rs.getString("last_name"),
+                    rs.getString("first_name"),
+                    rs.getString("contact_number"),
+                    rs.getInt("donor_id"),
+                    rs.getString("status")
+                );
+                list.add(t);
+            }
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
         return list;
