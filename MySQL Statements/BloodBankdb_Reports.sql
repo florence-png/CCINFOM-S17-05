@@ -1,6 +1,8 @@
 -- BloodBank Database Reports
 USE `BloodBankdb`;
 
+-- EDIT ACCORDING TO FINALIZED RECORDS
+
 -- Report #01: Donation History Report
 SELECT   d.donor_id,
 	     CONCAT(d.first_name, ' ', d.last_name) AS donor_name,
