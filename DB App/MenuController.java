@@ -38,10 +38,6 @@ public class MenuController implements ActionListener {
                 cl = (CardLayout) (mainCardPanel.getLayout());
                 cl.show(mainCardPanel, "TECHNICIAN_GUI");
                 break;
-            case "BTN_INV_MGMT":
-                cl = (CardLayout) (mainCardPanel.getLayout());
-                cl.show(mainCardPanel, "INVENTORY_GUI");
-
             case "BTN_BRANCH_MGMT":
                 JOptionPane.showMessageDialog(menuGUI.getRootPanel(), "Branch Management Clicked!");
                 break;

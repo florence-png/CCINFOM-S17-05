@@ -3,7 +3,7 @@
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
 //
-//public class DonorController implements ActionListener {
+//public class InventoryController implements ActionListener {
 //
 //    private DonorGUI inventoryGUI;
 //    private JPanel mainCardPanel;
@@ -12,7 +12,7 @@
 //     * Constructor for the Donor Controller.
 //     * Takes the DonorGUI instance to attach listeners to its components.
 //     */
-//    public DonorController(DonorGUI inventoryGUI, JPanel mainCardPanel) {
+//    public InventoryController(DonorGUI inventoryGUI, JPanel mainCardPanel) {
 //        this.inventoryGUI = inventoryGUI;
 //        this.mainCardPanel = mainCardPanel;
 //        addListeners();
