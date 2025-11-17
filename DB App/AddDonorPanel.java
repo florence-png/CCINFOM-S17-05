@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import org.jdatepicker.JDatePicker;
+import java.util.Calendar;
 
 public class AddDonorPanel extends AbstractFormPanel {
 
@@ -9,12 +11,12 @@ public class AddDonorPanel extends AbstractFormPanel {
     private JTextField txtEmail;
     private JTextField txtContactNumber;
     private JComboBox<String> comboSex;
-    private JTextField txtBirthdate;
+    private JDatePicker datePicker;
     private JComboBox<String> comboBloodType;
     private JTextArea txtRemarks;
 
     public AddDonorPanel() {
-        super("Donor"); // Tell the base class the entity name
+        super("Donor");
 
         // Set action commands
         btnSave.setActionCommand("DONOR_SAVE_NEW");
@@ -38,7 +40,12 @@ public class AddDonorPanel extends AbstractFormPanel {
         txtEmail = new JTextField(20);
         txtContactNumber = new JTextField(20);
         comboSex = new JComboBox<>(new String[]{"Male", "Female"});
-        txtBirthdate = new JTextField(20); // Hint: Use JSpinner or JDatePicker
+
+        Calendar today = Calendar.getInstance();
+        datePicker = new JDatePicker(today);
+        datePicker.setTextEditable(true);
+        datePicker.setShowYearButtons(true);
+
         comboBloodType = new JComboBox<>(new String[]{"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"});
         txtRemarks = new JTextArea(3, 20);
 
@@ -72,7 +79,7 @@ public class AddDonorPanel extends AbstractFormPanel {
         gbc.gridx = 0; gbc.anchor = GridBagConstraints.EAST;
         gbc.gridy = y; formPanel.add(new JLabel("Birthdate:"), gbc);
         gbc.gridx = 1; gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridy = y++; formPanel.add(txtBirthdate, gbc);
+        gbc.gridy = y++; formPanel.add(datePicker, gbc);
 
         gbc.gridx = 0; gbc.anchor = GridBagConstraints.EAST;
         gbc.gridy = y; formPanel.add(new JLabel("Blood Type:"), gbc);
@@ -94,12 +101,18 @@ public class AddDonorPanel extends AbstractFormPanel {
         txtEmail.setText("");
         txtContactNumber.setText("");
         comboSex.setSelectedIndex(0);
-        txtBirthdate.setText("");
+        datePicker.getModel().setValue(null);
         comboBloodType.setSelectedIndex(0);
         txtRemarks.setText("");
     }
 
     // --- Getters for the Controller ---
     public JTextField getTxtLastName() { return txtLastName; }
-    private JTextField getTxtFirstName() { return txtLastName; }
+    public JTextField getTxtFirstName() { return txtLastName; }
+    public JTextField getTxtEmail() { return txtEmail; }
+    public JTextField getTxtContactNumber() { return txtContactNumber; }
+    public JComboBox<String> getComboSex() { return comboSex; }
+    public JDatePicker getDatePicker() { return datePicker; }
+    public JComboBox<String> getComboBloodType() { return comboBloodType; }
+    public JTextArea getTxtRemarks() { return txtRemarks; }
 }

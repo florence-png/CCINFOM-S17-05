@@ -1,4 +1,3 @@
-// New File: AbstractDetailPanel.java
 import javax.swing.*;
 import java.awt.*;
 
