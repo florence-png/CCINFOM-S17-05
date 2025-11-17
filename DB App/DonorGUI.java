@@ -7,9 +7,9 @@ public class DonorGUI extends JPanel {
 
         // Specific panels for this entity
         private DonorMenuPanel menuPanel;
-        private AddDonorPanel addPanel;
-        private ManageDonorPanel managePanel;
-        private DetailDonorPanel detailPanel;
+        private DonorAddPanel addPanel;
+        private DonorManagePanel managePanel;
+        private DonorDetailPanel detailPanel;
 
         public DonorGUI() {
             super(new BorderLayout());
@@ -18,9 +18,9 @@ public class DonorGUI extends JPanel {
 
             // Create the specific panels
             menuPanel = new DonorMenuPanel();
-            addPanel = new AddDonorPanel();
-            managePanel = new ManageDonorPanel();
-            detailPanel = new DetailDonorPanel();
+            addPanel = new DonorAddPanel();
+            managePanel = new DonorManagePanel();
+            detailPanel = new DonorDetailPanel();
 
             // Add them to the CardLayout
             cardPanel.add(menuPanel, "MENU");
@@ -38,7 +38,7 @@ public class DonorGUI extends JPanel {
 
         // Getters for DonorController
         public DonorMenuPanel getMenuPanel() { return menuPanel; }
-        public AddDonorPanel getAddPanel() { return addPanel; }
-        public ManageDonorPanel getManagePanel() { return managePanel; }
-        public DetailDonorPanel getDetailPanel() { return detailPanel; }
+        public DonorAddPanel getAddPanel() { return addPanel; }
+        public DonorManagePanel getManagePanel() { return managePanel; }
+        public DonorDetailPanel getDetailPanel() { return detailPanel; }
 }

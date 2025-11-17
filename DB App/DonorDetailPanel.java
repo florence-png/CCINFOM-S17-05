@@ -1,14 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
-// import your.model.Donor; // Import your Donor object
-// import java.util.List; // For history
-
-public class DetailDonorPanel extends AbstractDetailPanel<Donor> {
+public class DonorDetailPanel extends AbstractDetailPanel<Donor> {
 
     // --- Donor-Specific Labels ---
     private JLabel lblBloodType, lblSex, lblBirthdate, lblAge, lblEmail, lblContact;
 
-    public DetailDonorPanel() {
+    public DonorDetailPanel() {
         super(); // Calls constructor of AbstractDetailPanel
 
         // Set action command for the "Return" button
@@ -41,15 +38,8 @@ public class DetailDonorPanel extends AbstractDetailPanel<Donor> {
         // Set text for all the labels
         lblBloodType.setText("Type: " + donor.getBloodType());
         lblSex.setText("Sex: " + donor.getSex());
-
-        // --- FIX 1 ---
-        // The method in your Donor model is getBirthdate(), not getDob()
         lblBirthdate.setText("Birthdate: " + donor.getBirthdate().toString());
-
         lblAge.setText("Age: " + donor.getAge());
-
-        // --- FIX 2 ---
-        // The Donor model has getDonorEmail() and getContactNumber()
         lblEmail.setText("E-mail: " + donor.getDonorEmail());
         lblContact.setText("Contact No.: " + donor.getContactNumber());
     }

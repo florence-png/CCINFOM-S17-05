@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import org.jdatepicker.JDatePicker;
-import java.util.Calendar;
 
-public class AddDonorPanel extends AbstractFormPanel {
+public class DonorAddPanel extends AbstractFormPanel {
 
     // --- Donor-Specific Components ---
     private JTextField txtLastName;
@@ -11,22 +9,18 @@ public class AddDonorPanel extends AbstractFormPanel {
     private JTextField txtEmail;
     private JTextField txtContactNumber;
     private JComboBox<String> comboSex;
-    private JDatePicker datePicker;
+    private JTextField txtBirthdate;
     private JComboBox<String> comboBloodType;
     private JTextArea txtRemarks;
 
-    public AddDonorPanel() {
-        super("Donor");
+    public DonorAddPanel() {
+        super("Donor"); // Tell the base class the entity name
 
         // Set action commands
         btnSave.setActionCommand("DONOR_SAVE_NEW");
         btnReturn.setActionCommand("DONOR_RETURN_TO_MENU");
     }
 
-    /**
-     * This is the required method from the abstract class.
-     * We just build and return the panel with our specific fields.
-     */
     @Override
     protected JPanel createForm() {
         JPanel formPanel = new JPanel(new GridBagLayout()); // Use a good layout
@@ -40,12 +34,7 @@ public class AddDonorPanel extends AbstractFormPanel {
         txtEmail = new JTextField(20);
         txtContactNumber = new JTextField(20);
         comboSex = new JComboBox<>(new String[]{"Male", "Female"});
-
-        Calendar today = Calendar.getInstance();
-        datePicker = new JDatePicker(today);
-        datePicker.setTextEditable(true);
-        datePicker.setShowYearButtons(true);
-
+        txtBirthdate = new JTextField(20); // Hint: Use JSpinner or JDatePicker
         comboBloodType = new JComboBox<>(new String[]{"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"});
         txtRemarks = new JTextArea(3, 20);
 
@@ -79,7 +68,7 @@ public class AddDonorPanel extends AbstractFormPanel {
         gbc.gridx = 0; gbc.anchor = GridBagConstraints.EAST;
         gbc.gridy = y; formPanel.add(new JLabel("Birthdate:"), gbc);
         gbc.gridx = 1; gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridy = y++; formPanel.add(datePicker, gbc);
+        gbc.gridy = y++; formPanel.add(txtBirthdate, gbc);
 
         gbc.gridx = 0; gbc.anchor = GridBagConstraints.EAST;
         gbc.gridy = y; formPanel.add(new JLabel("Blood Type:"), gbc);
@@ -101,18 +90,18 @@ public class AddDonorPanel extends AbstractFormPanel {
         txtEmail.setText("");
         txtContactNumber.setText("");
         comboSex.setSelectedIndex(0);
-        datePicker.getModel().setValue(null);
+        txtBirthdate.setText("");
         comboBloodType.setSelectedIndex(0);
         txtRemarks.setText("");
     }
 
     // --- Getters for the Controller ---
     public JTextField getTxtLastName() { return txtLastName; }
-    public JTextField getTxtFirstName() { return txtLastName; }
+    public JTextField getTxtFirstName() { return txtFirstName; }
     public JTextField getTxtEmail() { return txtEmail; }
     public JTextField getTxtContactNumber() { return txtContactNumber; }
     public JComboBox<String> getComboSex() { return comboSex; }
-    public JDatePicker getDatePicker() { return datePicker; }
+    public JTextField getTxtBirthdate() { return txtBirthdate; }
     public JComboBox<String> getComboBloodType() { return comboBloodType; }
     public JTextArea getTxtRemarks() { return txtRemarks; }
 }

@@ -1,20 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-// import your.model.Donor; // Import your Donor object
-
-public class ManageDonorPanel extends AbstractManagePanel<Donor> {
+public class TechnicianManagePanel extends AbstractManagePanel<Technician> {
 
     // Store the controller to attach to dynamic buttons
     private ActionListener controller;
 
-    public ManageDonorPanel() {
-        super("Donor"); // Pass entity name to abstract class
+    public TechnicianManagePanel() {
+        super("Technician"); // Pass entity name to abstract class
 
         // Set action commands for buttons from the abstract class
-        btnRefresh.setActionCommand("DONOR_REFRESH_LIST");
-        btnReturn.setActionCommand("DONOR_RETURN_TO_MENU");
-        btnSearch.setActionCommand("DONOR_SEARCH"); // You'll need to implement search
+        btnRefresh.setActionCommand("TECHNICIAN_REFRESH_LIST");
+        btnReturn.setActionCommand("TECHNICIAN_RETURN_TO_MENU");
+        btnSearch.setActionCommand("TECHNICIAN_SEARCH"); // You'll need to implement search
     }
 
     /**
@@ -22,29 +20,33 @@ public class ManageDonorPanel extends AbstractManagePanel<Donor> {
      * It builds one row for the list.
      */
     @Override
-    protected JPanel createEntityRowPanel(Donor donor) {
+    protected JPanel createEntityRowPanel(Technician technician) {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        // Donor Info (Name, Blood Type)
+        // Technician Info (Matches model fields)
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        infoPanel.add(new JLabel("Name: " + donor.getLastName() + ", " + donor.getFirstName()));
-        infoPanel.add(new JLabel("Type: " + donor.getBloodType()));
+
+        infoPanel.add(new JLabel("Name: " + technician.getLastName() + ", " + technician.getFirstName()));
+        infoPanel.add(new JLabel("Email: " + technician.getTechnicianEmail()));
+        infoPanel.add(new JLabel("Contact: " + technician.getContactNumber()));
+        infoPanel.add(new JLabel("Employed: " + technician.getDateEmployed()));
+
         panel.add(infoPanel, BorderLayout.CENTER);
 
-        // Button Panel (Details, Edit, Delete)
+        // Buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnDetails = new JButton("Details");
         JButton btnEdit = new JButton("Edit");
         JButton btnDelete = new JButton("Delete");
 
-        // --- Set unique commands with the Donor's ID ---
-        btnDetails.setActionCommand("DONOR_SHOW_DETAIL_" + donor.getDonorId());
-        btnEdit.setActionCommand("DONOR_EDIT_" + donor.getDonorId());
-        btnDelete.setActionCommand("DONOR_DELETE_" + donor.getDonorId());
+        // Unique action commands using technicianId
+        btnDetails.setActionCommand("TECHNICIAN_SHOW_DETAIL_" + technician.getTechnicianId());
+        btnEdit.setActionCommand("TECHNICIAN_EDIT_" + technician.getTechnicianId());
+        btnDelete.setActionCommand("TECHNICIAN_DELETE_" + technician.getTechnicianId());
 
-        // --- Attach the MAIN controller ---
+        // Attach controller
         if (controller != null) {
             btnDetails.addActionListener(controller);
             btnEdit.addActionListener(controller);
@@ -54,15 +56,12 @@ public class ManageDonorPanel extends AbstractManagePanel<Donor> {
         buttonPanel.add(btnDetails);
         buttonPanel.add(btnEdit);
         buttonPanel.add(btnDelete);
+
         panel.add(buttonPanel, BorderLayout.EAST);
 
         return panel;
     }
 
-    /**
-     * Called by the Controller so this panel can
-     * attach listeners to its dynamic buttons.
-     */
     public void setController(ActionListener controller) {
         this.controller = controller;
     }
