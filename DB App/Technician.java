@@ -6,15 +6,21 @@ public class Technician {
     private String firstName;
     private String technicianEmail;
     private String contactNumber;
+    private int age;
+    private char sex;
     private Date dateEmployed;
+    private String status;
 
-    public Technician(String lastName, String firstName, String technicianEmail, String contactNumber, Date dateEmployed) {
+    public Technician(String lastName, String firstName, String technicianEmail, String contactNumber, int age, char sex, Date dateEmployed, String status) {
         this.technicianId++;
         this.lastName = lastName;
         this.firstName = firstName;
         this.technicianEmail = technicianEmail;
+        this.age = age;
+        this.sex = sex;
         this.contactNumber = contactNumber;
         this.dateEmployed = dateEmployed;
+        this.status = status;
     }
 
     public String getContactNumber() {

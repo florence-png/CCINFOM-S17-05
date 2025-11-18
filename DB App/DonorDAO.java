@@ -56,7 +56,8 @@ public class DonorDAO{
                         rs.getString("sex").charAt(0),
                         rs.getDate("birthdate"),
                         rs.getString("blood_type"),
-                        rs.getString("remarks")
+                        rs.getString("remarks"),
+                        rs.getString("status")
                 );
                 list.add(d);
             }
@@ -86,7 +87,8 @@ public class DonorDAO{
                         rs.getString("sex").charAt(0),
                         rs.getDate("birthdate"),
                         rs.getString("blood_type"),
-                        rs.getString("remarks")
+                        rs.getString("remarks"),
+                        rs.getString("status")
                 );
             }
         }

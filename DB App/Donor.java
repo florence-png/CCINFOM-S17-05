@@ -12,12 +12,12 @@ public class Donor {
     private Date birthdate;
     private String bloodType;
     private String remarks;
-
+    private String status;
 
     // --- Constructors ---
     public Donor(int donorId, String lastName, String firstName, String donorEmail,
                  String contactNumber, int age, char sex, Date birthdate,
-                 String bloodType, String remarks) {
+                 String bloodType, String remarks, String status) {
         this.donorId = donorId;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -28,6 +28,7 @@ public class Donor {
         this.birthdate = birthdate;
         this.bloodType = bloodType;
         this.remarks = remarks;
+        this.status = status;
     }
 
     public Donor() { }
