@@ -86,25 +86,68 @@ public class TechnicianController {
             add.clearForm();
 
         } catch (java.text.ParseException e) {
-        JOptionPane.showMessageDialog(null,
-                "Invalid date format. Please use yyyy-MM-dd (e.g., 2000-01-15)",
-                "Date Error", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
-                "Validation Error", JOptionPane.ERROR_MESSAGE);
-    }
+            JOptionPane.showMessageDialog(null,
+                    "Invalid date format. Please use yyyy-MM-dd (e.g., 2000-01-15)",
+                    "Date Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
+                    "Validation Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // Manage Technician Panel
-    private void setupManagePanel() {
+    private void setupManagePanel(){
         var manage = view.getManagePanel();
 
-        // Refresh List
-        manage.getBtnRefresh().addActionListener(e -> loadTechnicianList());
+        ActionListener listButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String command = e.getActionCommand();
+
+                // Handle "Details" button
+                if (command.startsWith("TECHNICIAN_SHOW_DETAIL_")) {
+                    int id = Integer.parseInt(command.substring("TECHNICIAN_SHOW_DETAIL_".length()));
+                    openDetails(id);
+                }
+                // Handle "Delete" button
+                else if (command.startsWith("TECHNICIAN_DELETE_")) {
+                    int id = Integer.parseInt(command.substring("TECHNICIAN_DELETE_".length()));
+                    deleteTechnician(id);
+                }
+                // Handle "Edit" button (to be made)
+                else if (command.startsWith("TECHNICIAN_EDIT_")) {
+                    int id = Integer.parseInt(command.substring("TECHNICIAN_EDIT_".length()));
+                    System.out.println("Edit requested for ID: " + id);
+                    // TODO: make this button
+                }
+            }
+        };
+
+        // Pass specific listener to ManagePanel
+        manage.setController(listButtonListener);
 
         manage.getBtnReturn().addActionListener(e -> view.showPanel("MENU"));
-
+        manage.getBtnRefresh().addActionListener(e -> loadTechnicianList());
         manage.getBtnSearch().addActionListener(e -> searchTechnicians());
+    }
+
+    private void openDetails(int technicianId) {
+        Technician technician = technicianDAO.getTechnicianById(technicianId);
+        if (technician != null) {
+            view.getDetailPanel().loadEntityData(technician);
+            view.showPanel("DETAIL_PANEL");
+        } else {
+            JOptionPane.showMessageDialog(null, "Donor not found.");
+        }
+    }
+
+    public void deleteTechnician(int technicianId){
+        int confirm = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to delete this technician?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            technicianDAO.deleteTechnician(technicianId);
+            loadTechnicianList(); // Refresh the list
+        }
     }
 
     private void loadTechnicianList() {

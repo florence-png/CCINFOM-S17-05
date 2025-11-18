@@ -1,24 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.Period;
+
 public class TechnicianDetailPanel extends AbstractDetailPanel<Technician> {
-
-    // --- Technician-Specific Labels ---
-    private JLabel lblEmail, lblContact, lblDateEmployed;
-
     public TechnicianDetailPanel() {
         super();
-
         btnReturn.setActionCommand("TECHNICIAN_DETAIL_RETURN");
-
-        infoPanel.setLayout(new GridLayout(0, 1, 5, 5)); // Single column list
-
-        lblEmail = new JLabel("E-mail: ");
-        lblContact = new JLabel("Contact No.: ");
-        lblDateEmployed = new JLabel("Date Employed: ");
-
-        infoPanel.add(lblEmail);
-        infoPanel.add(lblContact);
-        infoPanel.add(lblDateEmployed);
     }
 
     @Override
@@ -27,10 +15,34 @@ public class TechnicianDetailPanel extends AbstractDetailPanel<Technician> {
     }
 
     @Override
-    protected void populateInfoPanel(Technician technician) {
-        lblEmail.setText("E-mail: " + technician.getTechnicianEmail());
-        lblContact.setText("Contact No.: " + technician.getContactNumber());
-        lblDateEmployed.setText("Date Employed: " + technician.getDateEmployed());
+    protected void populateInfoPanel(Technician t) {
+        infoPanel.removeAll();
+
+        // Sex
+        String sexString = (t.getSex() == 'M') ? "Male" : "Female";
+        addLabel("Sex: " + sexString);
+
+        // Age
+        addLabel("Age: " + t.getAge());
+        // Date Employed
+        addLabel("Date Employed: " + t.getDateEmployed()); // Date Employed
+
+        // Years Employed (Calculation)
+        if (t.getDateEmployed() != null) {
+            // Convert Date to LocalDate
+            LocalDate start = t.getDateEmployed().toLocalDate();
+            LocalDate now = LocalDate.now();
+            int years = Period.between(start, now).getYears();
+            addLabel("Years Employed: " + years);
+        }
+
+        // Contact Info
+        addLabel("E-mail: " + t.getTechnicianEmail());
+        addLabel("Contact No.: " + t.getContactNumber());
+
+        // Refresh the UI to show new labels
+        infoPanel.revalidate();
+        infoPanel.repaint();
     }
 
     @Override
@@ -42,5 +54,13 @@ public class TechnicianDetailPanel extends AbstractDetailPanel<Technician> {
         sb.append("Extracted Blood on 2025-09-02 at Hamilton\n");
 
         txtHistory.setText(sb.toString());
+    }
+
+    // helper method to keep fonts consistent
+    private void addLabel(String text) {
+        JLabel lbl = new JLabel(text);
+        lbl.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        lbl.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0)); // Little spacing
+        infoPanel.add(lbl);
     }
 }

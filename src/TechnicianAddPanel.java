@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TechnicianAddPanel extends AbstractFormPanel {
-
     private JTextField txtLastName;
     private JTextField txtFirstName;
     private JTextField txtEmail;

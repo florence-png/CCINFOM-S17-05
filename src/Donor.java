@@ -1,4 +1,5 @@
-import java.util.Date;
+import java.sql.Date;
+
 public class Donor {
 
     // --- Fields ---
@@ -15,9 +16,10 @@ public class Donor {
     private String status;
 
     // --- Constructors ---
-    public Donor(String lastName, String firstName, String donorEmail,
+    public Donor(int donorId, String lastName, String firstName, String donorEmail,
                  String contactNumber, int age, char sex, Date birthdate,
                  String bloodType, String remarks, String status) {
+        this.donorId = donorId;
         this.lastName = lastName;
         this.firstName = firstName;
         this.donorEmail = donorEmail;
@@ -93,4 +95,5 @@ public class Donor {
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
+    public String getStatus() { return status; }
 }

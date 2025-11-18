@@ -1,31 +1,34 @@
 public class Hospital {
-    private int hospital_id;
-    private String name;
-    private String address;
+    private int hospitalId;
+    private String hospitalName;
+    private String street;
     private String city;
-    private String contact_number;
+    private String contactNumber;
+    private String status;
 
-    public Hospital(int hospitalId, String name, String address, String city, String contactNumber) {
-        this.hospital_id = hospitalId;
-        this.name = name;
-        this.address = address;
+    public Hospital(int hospitalId, String hospitalName, String street, String city, String contactNumber, String status) {
+        this.hospitalId = hospitalId;
+        this.hospitalName = hospitalName;
+        this.street = street;
         this.city = city;
-        this.contact_number = contactNumber;
+        this.contactNumber = contactNumber;
+        this.status = status;
     }
 
-    public int getHospital_id() {
-        return hospital_id;
+    public int getHospitalId() {
+        return hospitalId;
     }
-    public String getName() {
-        return name;
+    public String getHospitalName() {
+        return hospitalName;
     }
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
     public String getCity() {
         return city;
     }
-    public String getContact_number() {
-        return contact_number;
+    public String getContactNumber() {
+        return contactNumber;
     }
+    public String getStatus() { return status; }
 }

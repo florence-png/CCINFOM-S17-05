@@ -43,9 +43,9 @@ public class MenuController implements ActionListener {
                 break;
 
             case "BTN_HOSP_MGMT":
-                JOptionPane.showMessageDialog(menuGUI.getRootPanel(), "Hospital Management Clicked!");
+                cl = (CardLayout) (mainCardPanel.getLayout());
+                cl.show(mainCardPanel, "HOSPITAL_GUI");
                 break;
-
             case "BTN_TRANSACTION":
                 JOptionPane.showMessageDialog(menuGUI.getRootPanel(), "Transaction Clicked!");
                 break;

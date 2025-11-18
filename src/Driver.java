@@ -7,7 +7,7 @@ public class Driver {
         SwingUtilities.invokeLater(() -> {
             JFrame mainFrame = new JFrame("Blood Bank Management System");
             mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            mainFrame.setSize(900, 700); // Increased size for better layout
+            mainFrame.setSize(600, 480);
             mainFrame.setLocationRelativeTo(null); // Center the frame
             mainFrame.setResizable(true);
 
@@ -16,14 +16,17 @@ public class Driver {
             MenuGUI menuGUI = new MenuGUI();
             DonorGUI donorGUI = new DonorGUI();
             TechnicianGUI technicianGUI = new TechnicianGUI();
+            HospitalGUI hospitalGUI = new HospitalGUI();
 
             mainCardPanel.add(menuGUI, "MENU");
             mainCardPanel.add(donorGUI, "DONOR_GUI");
             mainCardPanel.add(technicianGUI, "TECHNICIAN_GUI");
+            mainCardPanel.add(hospitalGUI, "HOSPITAL_GUI");
 
             MenuController menuController = new MenuController(menuGUI, mainCardPanel);
             DonorController donorController = new DonorController(donorGUI, mainCardPanel);
             TechnicianController technicianController = new TechnicianController(technicianGUI, mainCardPanel);
+            HospitalController hospitalController = new HospitalController(hospitalGUI, mainCardPanel);
 
             mainFrame.setContentPane(mainCardPanel);
             mainFrame.setVisible(true);

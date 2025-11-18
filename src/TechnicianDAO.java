@@ -64,7 +64,6 @@ public class TechnicianDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
     }
 
@@ -76,7 +75,6 @@ public class TechnicianDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
-
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {

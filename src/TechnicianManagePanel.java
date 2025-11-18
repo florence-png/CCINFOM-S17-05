@@ -1,13 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-public class TechnicianManagePanel extends AbstractManagePanel<Technician> {
 
-    // Store the controller to attach to dynamic buttons
+public class TechnicianManagePanel extends AbstractManagePanel<Technician> {
     private ActionListener controller;
 
     public TechnicianManagePanel() {
-        super("Technician"); // Pass entity name to abstract class
+        super("Technician");
 
         // Set action commands for buttons from the abstract class
         btnRefresh.setActionCommand("TECHNICIAN_REFRESH_LIST");
@@ -15,10 +14,6 @@ public class TechnicianManagePanel extends AbstractManagePanel<Technician> {
         btnSearch.setActionCommand("TECHNICIAN_SEARCH"); // You'll need to implement search
     }
 
-    /**
-     * This is the required method from AbstractManagePanel.
-     * It builds one row for the list.
-     */
     @Override
     protected JPanel createEntityRowPanel(Technician technician) {
         JPanel panel = new JPanel(new BorderLayout(10, 10));

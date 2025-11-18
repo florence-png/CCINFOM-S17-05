@@ -118,14 +118,55 @@ public class DonorController {
     private void setupManagePanel(){
         var manage = view.getManagePanel();
 
-        // Refresh list
-        manage.getBtnRefresh().addActionListener(e -> loadDonorList());
+        ActionListener listButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String command = e.getActionCommand();
 
-        // Return -> Menu
+                // Handle "Details" button
+                if (command.startsWith("DONOR_SHOW_DETAIL_")) {
+                    int id = Integer.parseInt(command.substring("DONOR_SHOW_DETAIL_".length()));
+                    openDetails(id);
+                }
+                // Handle "Delete" button
+                else if (command.startsWith("DONOR_DELETE_")) {
+                    int id = Integer.parseInt(command.substring("DONOR_DELETE_".length()));
+                    deleteDonor(id);
+                }
+                // Handle "Edit" button (to be made)
+                else if (command.startsWith("TECHNICIAN_EDIT_")) {
+                    int id = Integer.parseInt(command.substring("TECHNICIAN_EDIT_".length()));
+                    System.out.println("Edit requested for ID: " + id);
+                    // TODO: make this button
+                }
+            }
+        };
+
+        // Pass specific listener to ManagePanel
+        manage.setController(listButtonListener);
+
         manage.getBtnReturn().addActionListener(e -> view.showPanel("MENU"));
-
-        // Search
+        manage.getBtnRefresh().addActionListener(e -> loadDonorList());
         manage.getBtnSearch().addActionListener(e -> searchDonors());
+    }
+
+    private void openDetails(int donorId) {
+        Donor donor = donorDAO.getDonorById(donorId);
+        if (donor != null) {
+            view.getDetailPanel().loadEntityData(donor);
+            view.showPanel("DETAIL_PANEL");
+        } else {
+            JOptionPane.showMessageDialog(null, "Donor not found.");
+        }
+    }
+
+    public void deleteDonor(int donorId){
+        int confirm = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to delete this technician?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            donorDAO.deleteDonor(donorId);
+            loadDonorList(); // Refresh the list
+        }
     }
 
     private void loadDonorList() {
@@ -153,24 +194,5 @@ public class DonorController {
     private void setupDetailPanel(){
         var detail = view.getDetailPanel();
         detail.getBtnReturn().addActionListener(e -> view.showPanel("MANAGE_LIST"));
-    }
-
-    // Called by ManageDonorPanel row buttons
-    public void openDetails(Donor donor){
-        view.getDetailPanel().loadEntityData(donor);
-        view.showPanel("DETAIL_PANEL");
-    }
-
-    // Called by ManageDonorPanel row buttons
-    public void deleteDonor(Donor donor){
-        int confirm = JOptionPane.showConfirmDialog(null,
-                "Delete donor " + donor.getFirstName() + " " + donor.getLastName() + "?",
-                "Confirm Delete",
-                JOptionPane.YES_NO_OPTION);
-
-        if(confirm == JOptionPane.YES_OPTION){
-            donorDAO.deleteDonor(donor.getDonorId());
-            loadDonorList();
-        }
     }
 }

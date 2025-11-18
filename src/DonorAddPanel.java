@@ -3,7 +3,6 @@ import java.awt.*;
 
 public class DonorAddPanel extends AbstractFormPanel {
 
-    // --- Donor-Specific Components ---
     private JTextField txtLastName;
     private JTextField txtFirstName;
     private JTextField txtEmail;
@@ -14,21 +13,19 @@ public class DonorAddPanel extends AbstractFormPanel {
     private JTextArea txtRemarks;
 
     public DonorAddPanel() {
-        super("Donor"); // Tell the base class the entity name
+        super("Donor");
 
-        // Set action commands
         btnSave.setActionCommand("DONOR_SAVE_NEW");
         btnReturn.setActionCommand("DONOR_RETURN_TO_MENU");
     }
 
     @Override
     protected JPanel createForm() {
-        JPanel formPanel = new JPanel(new GridBagLayout()); // Use a good layout
+        JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Init components
         txtLastName = new JTextField(20);
         txtFirstName = new JTextField(20);
         txtEmail = new JTextField(20);
@@ -94,7 +91,7 @@ public class DonorAddPanel extends AbstractFormPanel {
         txtRemarks.setText("");
     }
 
-    // --- Getters for the Controller ---
+    // Getters for the Controller
     public JTextField getTxtLastName() { return txtLastName; }
     public JTextField getTxtFirstName() { return txtFirstName; }
     public JTextField getTxtEmail() { return txtEmail; }

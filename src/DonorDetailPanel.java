@@ -1,31 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 public class DonorDetailPanel extends AbstractDetailPanel<Donor> {
-
-    // --- Donor-Specific Labels ---
-    private JLabel lblBloodType, lblSex, lblBirthdate, lblAge, lblEmail, lblContact;
-
     public DonorDetailPanel() {
-        super(); // Calls constructor of AbstractDetailPanel
-
-        // Set action command for the "Return" button
+        super();
         btnReturn.setActionCommand("DONOR_DETAIL_RETURN");
-
-        // --- Setup the infoPanel (from abstract class) ---
-        infoPanel.setLayout(new GridLayout(0, 1, 5, 5)); // 1 column
-        lblBloodType = new JLabel("Type: ");
-        lblSex = new JLabel("Sex: ");
-        lblBirthdate = new JLabel("Birthdate: ");
-        lblAge = new JLabel("Age: ");
-        lblEmail = new JLabel("E-mail: ");
-        lblContact = new JLabel("Contact No.: ");
-
-        infoPanel.add(lblBloodType);
-        infoPanel.add(lblSex);
-        infoPanel.add(lblBirthdate);
-        infoPanel.add(lblAge);
-        infoPanel.add(lblEmail);
-        infoPanel.add(lblContact);
     }
 
     @Override
@@ -34,32 +12,57 @@ public class DonorDetailPanel extends AbstractDetailPanel<Donor> {
     }
 
     @Override
-    protected void populateInfoPanel(Donor donor) {
-        // Set text for all the labels
-        lblBloodType.setText("Type: " + donor.getBloodType());
-        lblSex.setText("Sex: " + donor.getSex());
-        lblBirthdate.setText("Birthdate: " + donor.getBirthdate().toString());
-        lblAge.setText("Age: " + donor.getAge());
-        lblEmail.setText("E-mail: " + donor.getDonorEmail());
-        lblContact.setText("Contact No.: " + donor.getContactNumber());
+    protected void populateInfoPanel(Donor d) {
+        infoPanel.removeAll();
+
+        // Contact Info
+        addLabel("E-mail: " + d.getDonorEmail());
+        addLabel("Contact No.: " + d.getContactNumber());
+
+        // Age
+        addLabel("Age: " + d.getAge());
+
+        // Sex
+        String sexString = (d.getSex() == 'M') ? "Male" : "Female";
+        addLabel("Sex: " + sexString);
+
+        // Birthdate
+        addLabel("Birthdate: " + d.getBirthdate());
+
+        // Blood type
+        String bloodTypeLabel = switch (d.getBloodType()) {
+            case "A+" -> "A Positive (A+)";
+            case "A-" -> "A Negative (A-)";
+            case "B+" -> "B Positive (B+)";
+            case "B-" -> "B Negative (B-)";
+            case "AB+" -> "AB Positive (AB+)";
+            case "AB-" -> "AB Negative (AB-)";
+            case "O+" -> "O Positive (O+)";
+            case "O-" -> "O Negative (O-)";
+            default -> "Unknown";
+        };
+        addLabel("Blood Type: " + bloodTypeLabel);
+
+        // Remarks
+        addLabel("Remarks: " + d.getRemarks());
     }
 
     @Override
     protected void populateHistoryPanel(Donor donor) {
-        // 1. Fetch history from DAO
-        // DonationHistoryDAO historyDAO = new DonationHistoryDAO();
-        // List<Donation> history = historyDAO.getHistoryForDonor(donor.getDonorId());
-
-        // 2. Build a string and set it
         StringBuilder sb = new StringBuilder();
-        // for (Donation d : history) {
-        //    sb.append("Donated on " + d.getDate() + " at " + d.getBranchName() + "\n");
-        // }
 
-        // Simulation:
+        // TODO: replace with actual DAO logic
         sb.append("Donated on 2025-11-11 at Maple Branch\n");
         sb.append("Donated on 2025-09-02 at Hamilton\n");
 
         txtHistory.setText(sb.toString());
+    }
+
+    // helper method to keep fonts consistent
+    private void addLabel(String text) {
+        JLabel lbl = new JLabel(text);
+        lbl.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        lbl.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0)); // Little spacing
+        infoPanel.add(lbl);
     }
 }
