@@ -47,7 +47,6 @@ public class DonorDAO{
 
             while (rs.next()) {
                 Donor d = new Donor(
-                        rs.getInt("donor_id"),
                         rs.getString("last_name"),
                         rs.getString("first_name"),
                         rs.getString("donor_email"),
@@ -78,7 +77,6 @@ public class DonorDAO{
 
             if(rs.next()){
                 return new Donor(
-                        rs.getInt("donor_id"),
                         rs.getString("last_name"),
                         rs.getString("first_name"),
                         rs.getString("donor_email"),

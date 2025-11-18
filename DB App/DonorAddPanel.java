@@ -34,11 +34,10 @@ public class DonorAddPanel extends AbstractFormPanel {
         txtEmail = new JTextField(20);
         txtContactNumber = new JTextField(20);
         comboSex = new JComboBox<>(new String[]{"Male", "Female"});
-        txtBirthdate = new JTextField(20); // Hint: Use JSpinner or JDatePicker
+        txtBirthdate = new JTextField(20); // may use JDatePicker
         comboBloodType = new JComboBox<>(new String[]{"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"});
         txtRemarks = new JTextArea(3, 20);
 
-        // Add components using GridBagLayout
         int y = 0;
         gbc.gridx = 0; gbc.anchor = GridBagConstraints.EAST;
         gbc.gridy = y; formPanel.add(new JLabel("Last Name:"), gbc);
@@ -66,7 +65,7 @@ public class DonorAddPanel extends AbstractFormPanel {
         gbc.gridy = y++; formPanel.add(comboSex, gbc);
 
         gbc.gridx = 0; gbc.anchor = GridBagConstraints.EAST;
-        gbc.gridy = y; formPanel.add(new JLabel("Birthdate:"), gbc);
+        gbc.gridy = y; formPanel.add(new JLabel("Birthdate (yyyy-mm-dd):"), gbc);
         gbc.gridx = 1; gbc.anchor = GridBagConstraints.WEST;
         gbc.gridy = y++; formPanel.add(txtBirthdate, gbc);
 

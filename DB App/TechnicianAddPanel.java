@@ -7,7 +7,9 @@ public class TechnicianAddPanel extends AbstractFormPanel {
     private JTextField txtFirstName;
     private JTextField txtEmail;
     private JTextField txtContactNumber;
-    private JTextField txtDateEmployed; // Reflects model
+    private JTextField txtAge;
+    private JComboBox<String> comboSex;
+    private JTextField txtDateEmployed;
 
     public TechnicianAddPanel() {
         super("Technician");
@@ -27,10 +29,11 @@ public class TechnicianAddPanel extends AbstractFormPanel {
         txtFirstName = new JTextField(20);
         txtEmail = new JTextField(20);
         txtContactNumber = new JTextField(20);
-        txtDateEmployed = new JTextField(20); // Date field
+        txtAge = new JTextField(20);
+        comboSex = new JComboBox<>(new String[]{"Male", "Female"});
+        txtDateEmployed = new JTextField(20);
 
         int y = 0;
-
         gbc.gridx = 0; gbc.gridy = y; gbc.anchor = GridBagConstraints.EAST;
         formPanel.add(new JLabel("Last Name:"), gbc);
         gbc.gridx = 1; gbc.anchor = GridBagConstraints.WEST;
@@ -56,10 +59,21 @@ public class TechnicianAddPanel extends AbstractFormPanel {
         y++;
 
         gbc.gridx = 0; gbc.gridy = y; gbc.anchor = GridBagConstraints.EAST;
+        formPanel.add(new JLabel("Age:"), gbc);
+        gbc.gridx = 1; gbc.anchor = GridBagConstraints.WEST;
+        formPanel.add(txtAge, gbc);
+        y++;
+
+        gbc.gridx = 0; gbc.gridy = y; gbc.anchor = GridBagConstraints.EAST;
+        formPanel.add(new JLabel("Sex:"), gbc);
+        gbc.gridx = 1; gbc.anchor = GridBagConstraints.WEST;
+        formPanel.add(comboSex, gbc);
+        y++;
+
+        gbc.gridx = 0; gbc.gridy = y; gbc.anchor = GridBagConstraints.EAST;
         formPanel.add(new JLabel("Date Employed (yyyy-mm-dd):"), gbc);
         gbc.gridx = 1; gbc.anchor = GridBagConstraints.WEST;
         formPanel.add(txtDateEmployed, gbc);
-        y++;
 
         return formPanel;
     }
@@ -70,6 +84,8 @@ public class TechnicianAddPanel extends AbstractFormPanel {
         txtFirstName.setText("");
         txtEmail.setText("");
         txtContactNumber.setText("");
+        txtAge.setText("");
+        comboSex.setSelectedIndex(0);
         txtDateEmployed.setText("");
     }
 
@@ -77,5 +93,7 @@ public class TechnicianAddPanel extends AbstractFormPanel {
     public JTextField getTxtFirstName() { return txtFirstName; }
     public JTextField getTxtEmail() { return txtEmail; }
     public JTextField getTxtContactNumber() { return txtContactNumber; }
+    public JTextField getTxtAge() { return txtAge; }
+    public JComboBox<String> getComboSex() { return comboSex; }
     public JTextField getTxtDateEmployed() { return txtDateEmployed; }
 }

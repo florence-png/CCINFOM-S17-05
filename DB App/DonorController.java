@@ -47,7 +47,7 @@ public class DonorController {
     }
 
     // Add Donor Panel
-    private void setupAddPanel(){
+    private void setupAddPanel() {
         var add = view.getAddPanel();
 
         // Save button
@@ -57,7 +57,7 @@ public class DonorController {
         add.getBtnReturn().addActionListener(e -> view.showPanel("MENU"));
     }
 
-    private void saveDonor(){
+    private void saveDonor() {
         var add = view.getAddPanel();
         try {
             String lastName = add.getTxtLastName().getText().trim();
@@ -67,7 +67,7 @@ public class DonorController {
 
             // Get sex from combo box
             String sexStr = (String) add.getComboSex().getSelectedItem();
-            char sex = sexStr.equals("Male") ? 'M' : 'F';
+            char sex = sexStr.equals("Male") ? 'M' : 'F'; // M is male, anything else is female
 
             // Parse birthdate (format: yyyy-MM-dd)
             String birthdateStr = add.getTxtBirthdate().getText().trim();
@@ -113,7 +113,6 @@ public class DonorController {
                     "Validation Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     // Manage Donor Panel
     private void setupManagePanel(){

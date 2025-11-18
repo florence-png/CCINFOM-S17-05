@@ -7,10 +7,12 @@ public class TechnicianDAO {
     // Add new technician
     public void addTechnician(String lastName, String firstName,
                               String technicianEmail, String contactNumber,
+                              int age, char sex,
                               java.util.Date dateEmployed) {
 
         String sql = "INSERT INTO Technician " +
-                "(last_name, first_name, technician_email, contact_number, date_employed) " +
+                "(last_name, first_name, technician_email, contact_number, " +
+                "age, sex, date_employed, status) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnector.getConnection();
@@ -20,7 +22,9 @@ public class TechnicianDAO {
             stmt.setString(2, firstName);
             stmt.setString(3, technicianEmail);
             stmt.setString(4, contactNumber);
-            stmt.setDate(5, new java.sql.Date(dateEmployed.getTime()));
+            stmt.setInt(5, age);
+            stmt.setString(6, String.valueOf(sex));
+            stmt.setDate(7, new java.sql.Date(dateEmployed.getTime()));
 
             stmt.executeUpdate();
             System.out.println("Technician added successfully!");
@@ -42,13 +46,16 @@ public class TechnicianDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Technician t = new Technician(
+                Technician t =  new Technician(
                         rs.getInt("technician_id"),
                         rs.getString("last_name"),
                         rs.getString("first_name"),
                         rs.getString("technician_email"),
                         rs.getString("contact_number"),
-                        rs.getDate("date_employed")
+                        rs.getInt("age"),
+                        rs.getString("sex").charAt(0),
+                        rs.getDate("date_employed"),
+                        rs.getString("status")
                 );
                 list.add(t);
             }
@@ -59,7 +66,6 @@ public class TechnicianDAO {
 
         return list;
     }
-
 
     // Retrieve technician by ID
     public Technician getTechnicianById(int id) {
@@ -79,7 +85,10 @@ public class TechnicianDAO {
                         rs.getString("first_name"),
                         rs.getString("technician_email"),
                         rs.getString("contact_number"),
-                        rs.getDate("date_employed")
+                        rs.getInt("age"),
+                        rs.getString("sex").charAt(0),
+                        rs.getDate("date_employed"),
+                        rs.getString("status")
                 );
             }
 
@@ -103,8 +112,11 @@ public class TechnicianDAO {
             stmt.setString(2, t.getFirstName());
             stmt.setString(3, t.getTechnicianEmail());
             stmt.setString(4, t.getContactNumber());
-            stmt.setDate(5, new java.sql.Date(t.getDateEmployed().getTime()));
-            stmt.setInt(6, t.getTechnicianId());
+            stmt.setInt(5, t.getAge());
+            stmt.setString(6, String.valueOf(t.getSex()));
+            stmt.setDate(7, t.getDateEmployed());
+            stmt.setString(8, t.getStatus());
+            stmt.setInt(9, t.getTechnicianId());
 
             stmt.executeUpdate();
 

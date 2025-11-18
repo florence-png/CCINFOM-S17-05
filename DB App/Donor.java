@@ -15,10 +15,9 @@ public class Donor {
     private String status;
 
     // --- Constructors ---
-    public Donor(int donorId, String lastName, String firstName, String donorEmail,
+    public Donor(String lastName, String firstName, String donorEmail,
                  String contactNumber, int age, char sex, Date birthdate,
                  String bloodType, String remarks, String status) {
-        this.donorId = donorId;
         this.lastName = lastName;
         this.firstName = firstName;
         this.donorEmail = donorEmail;
