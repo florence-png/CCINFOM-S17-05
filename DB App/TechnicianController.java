@@ -1,155 +1,186 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.List;
-import javax.swing.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.List;
 
-public class TechnicianController {
+public class TechnicianController implements ActionListener{
 
-    private TechnicianGUI view;
-    private TechnicianDAO technicianDAO;
     private JPanel mainCardPanel;
+    private TechnicianMenuPanel menuPanel;
+    private TechnicianAddPanel addPanel;
+    private TechnicianManagePanel managePanel;
+    private TechnicianDetailPanel detailPanel;
+    private TechnicianDAO technicianDAO;
 
-    public TechnicianController(TechnicianGUI view, JPanel mainCardPanel){
-        this.view = view;
-        this.technicianDAO = new TechnicianDAO();
+    public TechnicianController(JPanel mainCardPanel, TechnicianMenuPanel menuPanel, TechnicianAddPanel addPanel, TechnicianManagePanel managePanel, TechnicianDetailPanel detailPanel){
         this.mainCardPanel = mainCardPanel;
-
-        setupMenuPanel();
-        setupAddPanel();
-        setupManagePanel();
-        setupDetailPanel();
+        this.menuPanel = menuPanel;
+        this.addPanel = addPanel;
+        this.managePanel = managePanel;
+        this.detailPanel = detailPanel;
+        this.technicianDAO = new TechnicianDAO();
+        setupListeners();
     }
 
-    // Menu Panel
-    private void setupMenuPanel(){
-        var menu = view.getMenuPanel();
+    private void setupListeners(){
+        // Menu Panel
+        menuPanel.getBtnAddRecord().addActionListener(this);
+        menuPanel.getBtnManageRecord().addActionListener(this);
+        menuPanel.getBtnReturn().addActionListener(this);
 
-        // Add Technician -> Add Form
-        menu.getBtnAddRecord().addActionListener(e -> {
-            view.getAddPanel().clearForm();
-            view.showPanel("ADD_FORM");
-        });
+        // Add Panel
+        addPanel.getBtnSave().addActionListener(this);
+        addPanel.getBtnReturn().addActionListener(this);
 
-        // Manage Technicians -> Manage List
-        menu.getBtnManageRecord().addActionListener(e -> {
-            loadTechnicianList();
-            view.showPanel("MANAGE_LIST");
-        });
+        // Manage Panel
+        managePanel.getBtnRefresh().addActionListener(this);
+        managePanel.getBtnReturn().addActionListener(this);
+        managePanel.getBtnSearch().addActionListener(this);
 
-        // Return to Main Menu
-        menu.getBtnReturn().addActionListener(e -> {
-            CardLayout cl = (CardLayout) mainCardPanel.getLayout();
-            cl.show(mainCardPanel, "MENU");
-        });
+        // Attach controller for dynamic row buttons
+        managePanel.setController(this);
+
+        // Detail Panel
+        detailPanel.getBtnReturn().addActionListener(this);
     }
 
-    // Add Technician Panel
-    private void setupAddPanel(){
-        var add = view.getAddPanel();
+    @Override
+    public void actionPerformed(ActionEvent e){
+        String command = e.getActionCommand();
 
-        // Save button
-        add.getBtnSave().addActionListener(e -> saveTechnician());
+        // --- Handle dynamic row buttons ---
+        if (command.startsWith("TECHNICIAN_SHOW_DETAIL_")) {
+            int id = Integer.parseInt(command.substring("TECHNICIAN_SHOW_DETAIL_".length()));
+            openDetails(id);
+            return;
+        } else if (command.startsWith("TECHNICIAN_DELETE_")) {
+            int id = Integer.parseInt(command.substring("TECHNICIAN_DELETE_".length()));
+            deleteTechnician(id);
+            return;
+        } else if (command.startsWith("TECHNICIAN_EDIT_")) {
+            int id = Integer.parseInt(command.substring("TECHNICIAN_EDIT_".length()));
+            // Optional: add edit logic
+            System.out.println("Edit Technician ID: " + id);
+            return;
+        }
 
-        // Return to Menu
-        add.getBtnReturn().addActionListener(e -> view.showPanel("MENU"));
-    }
+        // Handle static buttons
+        switch(command){
+            case "TECHNICIAN_SHOW_ADD_FORM":
+                addPanel.clearForm();
+                showPanel("ADD_FORM");
+                break;
 
-    private void saveTechnician(){
-        var add = view.getAddPanel();
+            case "TECHNICIAN_SHOW_MANAGE_LIST":
+                refreshTechnicianList();
+                showPanel("MANAGE_LIST");
+                break;
 
-        try {
-            String lastName = add.getTxtLastName().getText().trim();
-            String firstName = add.getTxtFirstName().getText().trim();
-            String email = add.getTxtEmail().getText().trim();
-            String contactNumber = add.getTxtContactNumber().getText().trim();
-            String dateStr = add.getTxtDateEmployed().getText().trim();
+            case "TECHNICIAN_RETURN_TO_MAIN":
+                showPanel("MENU");
+                break;
 
-            // VALIDATE INPUT
-            if (lastName.isEmpty() || firstName.isEmpty()) {
-                throw new IllegalArgumentException("Last name and first name are required.");
-            }
-            if (dateStr.isEmpty()) {
-                throw new IllegalArgumentException("Date employed is required.");
-            }
+            case "TECHNICIAN_SAVE_NEW":
+                saveTechnician();
+                break;
 
-            // PARSE DATE
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date dateUtil = sdf.parse(dateStr);
-            java.sql.Date dateEmployed = new java.sql.Date(dateUtil.getTime());
+            case "TECHNICIAN_REFRESH_LIST":
+                refreshTechnicianList();
+                break;
 
-            // SAVE TO DB
-            technicianDAO.addTechnician(lastName, firstName, email, contactNumber, dateEmployed);
+            case "TECHNICIAN_SEARCH":
+                searchTechnicians();
+                break;
 
-            JOptionPane.showMessageDialog(null, "Technician saved successfully!");
-            add.clearForm();
+            case "TECHNICIAN_RETURN_TO_MENU":
+                showPanel("MENU");
+                break;
 
-        } catch (java.text.ParseException e) {
-            JOptionPane.showMessageDialog(null,
-                    "Invalid date format. Use yyyy-MM-dd.",
-                    "Date Error", JOptionPane.ERROR_MESSAGE);
+            case "TECHNICIAN_DETAIL_RETURN":
+                showPanel("MANAGE_LIST");
+                break;
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,
-                    "Error: " + e.getMessage(),
-                    "Validation Error", JOptionPane.ERROR_MESSAGE);
+            default:
+                System.out.println("Unknown command: " + command);
+                break;
         }
     }
 
-    // MANAGE PANEL SETUP
-    private void setupManagePanel(){
-        var manage = view.getManagePanel();
-
-        manage.getBtnRefresh().addActionListener(e -> loadTechnicianList());
-        manage.getBtnReturn().addActionListener(e -> view.showPanel("MENU"));
-        manage.getBtnSearch().addActionListener(e -> searchTechnicians());
+    private void showPanel(String name){
+        CardLayout cl = (CardLayout) mainCardPanel.getLayout();
+        cl.show(mainCardPanel, name);
     }
 
-    private void loadTechnicianList() {
+    private void saveTechnician(){
+        try{
+            String lastName = addPanel.getTxtLastName().getText().trim();
+            String firstName = addPanel.getTxtFirstName().getText().trim();
+            String email = addPanel.getTxtEmail().getText().trim();
+            String contact = addPanel.getTxtContactNumber().getText().trim();
+            String dateEmployedStr = addPanel.getTxtDateEmployed().getText().trim();
+
+            if(lastName.isEmpty() || firstName.isEmpty() || dateEmployedStr.isEmpty()){
+                throw new IllegalArgumentException("Last name, first name, and date employed are required.");
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date dateEmployed = sdf.parse(dateEmployedStr);
+
+            technicianDAO.addTechnician(lastName, firstName, email, contact, dateEmployed);
+            JOptionPane.showMessageDialog(null, "Technician saved successfully!");
+            addPanel.clearForm();
+            showPanel("MENU");
+
+        }
+        catch(java.text.ParseException e){
+            JOptionPane.showMessageDialog(null, "Invalid date format. Use yyyy-MM-dd", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void refreshTechnicianList(){
         List<Technician> list = technicianDAO.getAllTechnicians();
-        view.getManagePanel().displayEntities(list);
+        managePanel.displayEntities(list);
     }
 
-    private void searchTechnicians() {
-        String query = view.getManagePanel().getTxtSearch().getText().trim();
-
-        if (query.isEmpty()) {
-            loadTechnicianList();
+    private void searchTechnicians(){
+        String query = managePanel.getTxtSearch().getText().trim();
+        if(query.isEmpty()){
+            refreshTechnicianList();
             return;
         }
 
         List<Technician> all = technicianDAO.getAllTechnicians();
         List<Technician> filtered = all.stream()
                 .filter(t -> (t.getFirstName() + " " + t.getLastName())
-                        .toLowerCase()
-                        .contains(query.toLowerCase()))
+                        .toLowerCase().contains(query.toLowerCase()))
                 .toList();
 
-        view.getManagePanel().displayEntities(filtered);
+        managePanel.displayEntities(filtered);
     }
 
-    // DETAIL PANEL SETUP
-    private void setupDetailPanel(){
-        var detail = view.getDetailPanel();
-        detail.getBtnReturn().addActionListener(e -> view.showPanel("MANAGE_LIST"));
+    private void openDetails(int technicianId){
+        Technician tech = technicianDAO.getAllTechnicians().stream()
+                .filter(t -> t.getTechnicianId() == technicianId)
+                .findFirst()
+                .orElse(null);
+
+        if(tech != null){
+            detailPanel.loadEntityData(tech);
+            showPanel("DETAIL_PANEL");
+        }
     }
 
-    public void openDetails(Technician technician){
-        view.getDetailPanel().loadEntityData(technician);
-        view.showPanel("DETAIL_PANEL");
-    }
-
-    public void deleteTechnician(Technician technician){
+    private void deleteTechnician(int technicianId){
         int confirm = JOptionPane.showConfirmDialog(null,
-                "Delete technician " + technician.getFirstName() + " " + technician.getLastName() + "?",
-                "Confirm Delete",
-                JOptionPane.YES_NO_OPTION);
+                "Delete this technician?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
 
         if(confirm == JOptionPane.YES_OPTION){
-            technicianDAO.deleteTechnician(technician.getTechnicianId());
-            loadTechnicianList();
+            technicianDAO.setTechnicianStatus(technicianId, "Deleted");
+            refreshTechnicianList();
         }
     }
 }
