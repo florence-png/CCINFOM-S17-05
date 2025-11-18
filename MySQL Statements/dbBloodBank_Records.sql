@@ -1,5 +1,6 @@
 -- Create Database
 CREATE DATABASE IF NOT EXISTS `BloodBankdb`;
+USE `BloodBankdb`;
 
 -- CORE RECORDS
 -- CREATE Donor Records
@@ -65,7 +66,7 @@ ADD CONSTRAINT unique_donor_combo UNIQUE (first_name, last_name, birthdate, bloo
 -- TRANSACTIONAL RECORDS
 -- CREATE Blood Inventory Records
 CREATE TABLE IF NOT EXISTS inventory (
-	inventory_id INT PRIMARY KEY,
+	inventory_id INT AUTO_INCREMENT PRIMARY KEY,
 	blood_type ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NOT NULL,
     component_type ENUM('plasma', 'platelets', 'red blood cells', 'white blood cells') NOT NULL,
     received_date DATE NOT NULL,
@@ -101,7 +102,7 @@ CREATE TABLE IF NOT EXISTS hospital_request (
     hospital_id INT NOT NULL,
     branch_id INT NOT NULL,
     blood_type ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NOT NULL,
-    component_type ENUM('plasma', 'platelets', 'red blood cells', 'white blood cells') NOT NULL,
+    component_requested ENUM('plasma', 'platelets', 'red blood cells', 'white blood cells') NOT NULL,
     units_requested INT NOT NULL,
     request_date DATE NOT NULL,
     status ENUM('Pending', 'Fulfilled', 'Cancelled') DEFAULT 'Pending',
@@ -114,7 +115,7 @@ CREATE TABLE IF NOT EXISTS hospital_request (
 
 
 -- ###################################################################
--- SAMPLE RECCORDS 
+-- SAMPLE RECCORDS (MODIFY TO HAVE AT LEAST 10 RECORDS EACH TABLE)
 -- ###################################################################
 
 -- INSERT Donor Records
@@ -151,7 +152,7 @@ VALUES
 (10, 'Garfield', 'Andrew'  , 'technician10_@gmail.com', '011011000', 39, 'M', '2020-11-11');
 
 -- INSERT Blood Branch Records
-INSERT INTO blood_banks (branch_id, branch_name, street_address, city, region, contact_number)
+INSERT INTO blood_banks (branch_id, branch_name, street, city, region, contact_number)
 VALUES
 (1, 'Maple Branch'  , '100 Maple Street' , 'Manila'       , 'Region A', '021234'),
 (2, 'Hamilton'      , '321 Burr Street'  , 'Pasay'        , 'Region B', '025678'),
@@ -165,7 +166,7 @@ VALUES
 (10, 'U Branch'     , '421 Asdf Street'  , 'Atbash City'  , 'Region D', '024321');
 
 -- INSERT Hospital Records
-INSERT INTO hospitals (hospital_id, hospital_name, street_address, city, region, contact_number)
+INSERT INTO hospitals (hospital_id, hospital_name, street, city, region, contact_number)
 VALUES 
 (1, 'Pines Standing Hospital'    , '999 Trese Street'   , 'Manila'       , 'Region A', '0012345'),
 (2, 'Mors Central Hospital'      , '111 Koffine Street' , 'Pasay'        , 'Region B', '0067890'),
@@ -181,39 +182,98 @@ VALUES
 
 
 -- INSERT Blood Inventory Records
-INSERT INTO inventory (blood_type, component_type, received_date, expiry_date, remarks, donor_id, technician_id, branch_id)
+INSERT INTO inventory (blood_type, component_type, received_date, expiry_date, remarks, donor_id, technician_id, branch_id, status)
 VALUES
-('A+' , 'red blood cells'  , '2023-09-10', '2099-01-01', 'No Issues', 1, 1, 1),
-('A+' , 'plasma'           , '2023-09-10', '2099-01-01', 'No Issues', 1, 1, 1),
-('A+' , 'platelets'        , '2023-09-10', '2099-01-01', 'No Issues', 1, 1, 1),
-('A+' , 'white blood cells', '2023-09-10', '2099-01-01', 'No Issues', 1, 1, 1),
+('A+' , 'red blood cells'  , '2023-09-10', '2099-01-01', 'No Issues', 1, 1, 1, DEFAULT),
+('A+' , 'plasma'           , '2023-09-10', '2099-01-01', 'No Issues', 1, 1, 1, DEFAULT),
+('A+' , 'platelets'        , '2023-09-10', '2099-01-01', 'No Issues', 1, 1, 1, DEFAULT),
+('A+' , 'white blood cells', '2023-09-10', '2099-01-01', 'No Issues', 1, 1, 1, DEFAULT),
 
-('B-' , 'red blood cells'  , '2024-10-24', '2099-01-01', 'No Issues', 2, 2, 2),
-('B-' , 'plasma'           , '2024-10-24', '2099-01-01', 'No Issues', 2, 2, 2),
-('B-' , 'platelets'        , '2024-10-24', '2099-01-01', 'No Issues', 2, 2, 2),
-('B-' , 'white blood cells', '2024-10-24', '2099-01-01', 'No Issues', 2, 2, 2),
+('B-' , 'red blood cells'  , '2024-10-24', '2099-01-01', 'No Issues', 2, 2, 2, DEFAULT),
+('B-' , 'plasma'           , '2024-10-24', '2099-01-01', 'No Issues', 2, 2, 2, DEFAULT),
+('B-' , 'platelets'        , '2024-10-24', '2099-01-01', 'No Issues', 2, 2, 2, DEFAULT),
+('B-' , 'white blood cells', '2024-10-24', '2099-01-01', 'No Issues', 2, 2, 2, DEFAULT),
 
-('O+' , 'red blood cells'  , '2025-05-20', '2099-01-01', 'No Issues', 3, 3, 3),
-('O+' , 'plasma'           , '2025-05-20', '2099-01-01', 'No Issues', 3, 3, 3),
-('O+' , 'platelets'        , '2025-05-20', '2099-01-01', 'No Issues', 3, 3, 3),
-('O+' , 'white blood cells', '2025-05-20', '2099-01-01', 'No Issues', 3, 3, 3),
+('O+' , 'red blood cells'  , '2025-06-21', '2099-01-01', 'No Issues', 3, 3, 3, DEFAULT),
+('O+' , 'plasma'           , '2025-06-21', '2099-01-01', 'No Issues', 3, 3, 3, DEFAULT),
+('O+' , 'platelets'        , '2025-06-21', '2099-01-01', 'No Issues', 3, 3, 3, DEFAULT),
+('O+' , 'white blood cells', '2025-06-21', '2099-01-01', 'No Issues', 3, 3, 3, DEFAULT),
 
-('O-' , 'red blood cells'  , '2025-09-26', '2099-01-01', 'No Issues', 4, 4, 4),
-('O-' , 'plasma'           , '2025-09-26', '2099-01-01', 'No Issues', 4, 4, 4),
-('O-' , 'platelets'        , '2025-09-26', '2099-01-01', 'No Issues', 4, 4, 4),
-('O-' , 'white blood cells', '2025-09-26', '2099-01-01', 'No Issues', 4, 4, 4),
+('O-' , 'red blood cells'  , '2025-09-26', '2099-01-01', 'No Issues', 4, 4, 4, DEFAULT),
+('O-' , 'plasma'           , '2025-09-26', '2099-01-01', 'No Issues', 4, 4, 4, DEFAULT),
+('O-' , 'platelets'        , '2025-09-26', '2099-01-01', 'No Issues', 4, 4, 4, DEFAULT),
+('O-' , 'white blood cells', '2025-09-26', '2099-01-01', 'No Issues', 4, 4, 4, DEFAULT),
 
-('A-' , 'red blood cells'  , '2024-11-30', '2099-01-01', 'No Issues', 5, 5, 5),
-('A-' , 'plasma'           , '2024-11-30', '2099-01-01', 'No Issues', 5, 5, 5),
-('A-' , 'platelets'        , '2024-11-30', '2099-01-01', 'No Issues', 5, 5, 5),
-('A-' , 'white blood cells', '2024-11-30', '2099-01-01', 'No Issues', 5, 5, 5),
+('A-' , 'red blood cells'  , '2024-11-30', '2099-01-01', 'No Issues', 5, 5, 5, DEFAULT),
+('A-' , 'plasma'           , '2024-11-30', '2099-01-01', 'No Issues', 5, 5, 5, DEFAULT),
+('A-' , 'platelets'        , '2024-11-30', '2099-01-01', 'No Issues', 5, 5, 5, DEFAULT),
+('A-' , 'white blood cells', '2024-11-30', '2099-01-01', 'No Issues', 5, 5, 5, DEFAULT),
 
-('B+' , 'red blood cells'  , '2024-07-19', '2099-01-01', 'No Issues', 6, 6, 6),
-('B+' , 'plasma'           , '2024-07-19', '2099-01-01', 'No Issues', 6, 6, 6),
-('B+' , 'platelets'        , '2024-07-19', '2099-01-01', 'No Issues', 6, 6, 6),
-('B+' , 'white blood cells', '2024-07-19', '2099-01-01', 'No Issues', 6, 6, 6),
+('B+' , 'red blood cells'  , '2024-07-19', '2099-01-01', 'No Issues', 6, 6, 6, DEFAULT),
+('B+' , 'plasma'           , '2024-07-19', '2099-01-01', 'No Issues', 6, 6, 6, DEFAULT),
+('B+' , 'platelets'        , '2024-07-19', '2099-01-01', 'No Issues', 6, 6, 6, DEFAULT),
+('B+' , 'white blood cells', '2024-07-19', '2099-01-01', 'No Issues', 6, 6, 6, DEFAULT),
 
-('AB+' , 'red blood cells'  , '2024-08-13', '2099-01-01', 'No Issues', 7, 7, 7),
-('AB+' , 'plasma'           , '2024-08-13', '2099-01-01', 'No Issues', 7, 7, 7),
-('AB+' , 'platelets'        , '2024-08-13', '2099-01-01', 'No Issues', 7, 7, 7),
-('AB+' , 'white blood cells', '2024-08-13', '2099-01-01', 'No Issues', 7, 7, 7);
+('AB+' , 'red blood cells'  , '2024-08-13', '2099-01-01', 'No Issues', 7, 7, 7, DEFAULT),
+('AB+' , 'plasma'           , '2024-08-13', '2099-01-01', 'No Issues', 7, 7, 7, DEFAULT),
+('AB+' , 'platelets'        , '2024-08-13', '2099-01-01', 'No Issues', 7, 7, 7, DEFAULT),
+('AB+' , 'white blood cells', '2024-08-13', '2099-01-01', 'No Issues', 7, 7, 7, DEFAULT),
+
+('AB+' , 'red blood cells'  , '2024-12-02', '2099-01-01', 'No Issues', 11, 1, 1, DEFAULT),
+('AB+' , 'plasma'           , '2024-12-02', '2099-01-01', 'No Issues', 11, 1, 1,  'Used'),
+('AB+' , 'platelets'        , '2024-12-02', '2099-01-01', 'No Issues', 11, 1, 1, DEFAULT),
+('AB+' , 'white blood cells', '2024-12-02', '2099-01-01', 'No Issues', 11, 1, 1, DEFAULT),
+
+('O+' , 'red blood cells'  , '2025-04-19', '2099-01-01', 'No Issues', 12, 2, 2, DEFAULT),
+('O+' , 'plasma'           , '2025-04-19', '2099-01-01', 'No Issues', 12, 2, 2, DEFAULT),
+('O+' , 'platelets'        , '2025-04-19', '2099-01-01', 'No Issues', 12, 2, 2, DEFAULT),
+('O+' , 'white blood cells', '2025-04-19', '2099-01-01', 'No Issues', 12, 2, 2, DEFAULT),
+
+('O-' , 'red blood cells'  , '2025-05-20', '2099-01-01', 'No Issues', 13, 3, 3, DEFAULT),
+('O-' , 'plasma'           , '2025-05-20', '2099-01-01', 'No Issues', 13, 3, 3, DEFAULT),
+('O-' , 'platelets'        , '2025-05-20', '2099-01-01', 'No Issues', 13, 3, 3, DEFAULT),
+('O-' , 'white blood cells', '2025-05-20', '2099-01-01', 'No Issues', 13, 3, 3,  'Used');
+
+-- INSERT Blood Inventory Records
+INSERT INTO appointments (donor_id, branch_id, appointment_date, technician_id, status)
+VALUES
+(1, 1,  '2023-09-10', 1, 'Completed'),
+(2, 2,  '2024-10-24', 2, 'Completed'),
+(3, 3,  '2025-06-21', 3, 'Completed'),
+(4, 4,  '2025-09-26', 4, 'Completed'),
+(5, 5,  '2024-11-30', 5, 'Completed'),
+(6, 6,  '2024-07-19', 6, 'Completed'),
+(7, 7,  '2024-08-13', 7, 'Completed'),
+(11, 1,  '2023-09-10', 1, 'Completed'),
+(12, 2,  '2024-10-24', 2, 'Completed'),
+(13, 3,  '2025-05-20', 3, 'Completed'),
+
+(11, 1,  '2025-11-25',    1,     DEFAULT),
+(12, 2,  '2025-11-25',    2, 'Cancelled'),
+(13, 3,  '2025-11-25', NULL,     DEFAULT),
+(14, 4,  '2026-12-09', NULL,     DEFAULT),
+(15, 5,  '2026-12-09',    5,     DEFAULT),
+(6, 6,   '2026-12-09', NULL,     DEFAULT),
+(7, 7,   '2026-11-29', NULL,     DEFAULT),
+(8, 8,   '2026-11-29', NULL,     DEFAULT),
+(9, 9,   '2025-11-30', NULL,     DEFAULT),
+(10, 10, '2025-11-30', NULL,     DEFAULT);
+
+-- INSERT Blood Inventory Records
+INSERT INTO hospital_request (hospital_id, branch_id, blood_type, component_requested, units_requested, request_date, status, date_fulfilled)
+VALUES
+(1, 1, 'AB+', 'plasma'           , 1, '2025-01-27', 'Fulfilled', '2025-02-13'),
+(2, 1, 'AB-', 'red blood cells'  , 2, '2025-02-12', 'Cancelled',         NULL),
+(3, 1, 'O-' , 'white blood cells', 1, '2025-09-24', 'Fulfilled', '2025-10-13'),
+
+( 1,  1, 'A+' , 'plasma'           , 1, '2025-11-15',     DEFAULT, NULL),
+( 2,  2, 'B-' , 'platelets'        , 1, '2025-07-15', 'Cancelled', NULL),
+( 3,  3, 'O+' , 'red blood cells'  , 1, '2025-11-15',     DEFAULT, NULL),
+( 4,  4, 'O-' , 'white blood cells', 1, '2025-09-15',     DEFAULT, NULL),
+( 5,  5, 'AB+', 'plasma'           , 1, '2025-10-15',     DEFAULT, NULL),
+( 6,  6, 'AB-', 'platelets'        , 1, '2025-11-05',     DEFAULT, NULL),
+( 7,  7, 'B+' , 'red blood cells'  , 1, '2025-10-03',     DEFAULT, NULL),
+( 8,  8, 'A-' , 'red blood cells'  , 1, '2025-09-28',     DEFAULT, NULL),
+( 9,  9, 'O+' , 'white blood cells', 1, '2025-10-26',     DEFAULT, NULL),
+(10, 10, 'A+' , 'white blood cells', 1, '2025-11-15',     DEFAULT, NULL)
+;
