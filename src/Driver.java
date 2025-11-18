@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class Driver {
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(() -> {
             JFrame mainFrame = new JFrame("Blood Bank Management System");
             mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -10,10 +10,10 @@ public class TechnicianDAO {
                               int age, char sex,
                               java.util.Date dateEmployed) {
 
-        String sql = "INSERT INTO Technician " +
+        String sql = "INSERT INTO technicians " +
                 "(last_name, first_name, technician_email, contact_number, " +
                 "age, sex, date_employed, status) " +
-                "VALUES (?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -25,6 +25,7 @@ public class TechnicianDAO {
             stmt.setInt(5, age);
             stmt.setString(6, String.valueOf(sex));
             stmt.setDate(7, new java.sql.Date(dateEmployed.getTime()));
+            stmt.setString(8, "Active");
 
             stmt.executeUpdate();
             System.out.println("Technician added successfully!");
@@ -39,7 +40,7 @@ public class TechnicianDAO {
     // Retrieve all technicians
     public List<Technician> getAllTechnicians() {
         List<Technician> list = new ArrayList<>();
-        String sql = "SELECT * FROM Technician";
+        String sql = "SELECT * FROM technicians";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -69,7 +70,7 @@ public class TechnicianDAO {
 
     // Retrieve technician by ID
     public Technician getTechnicianById(int id) {
-        String sql = "SELECT * FROM Technician WHERE technician_id=?";
+        String sql = "SELECT * FROM technicians WHERE technician_id=?";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -102,8 +103,8 @@ public class TechnicianDAO {
 
     // Update technician
     public void updateTechnician(Technician t) {
-        String sql = "UPDATE Technician SET last_name=?, first_name=?, technician_email=?, " +
-                "contact_number=?, date_employed=? WHERE technician_id=?";
+        String sql = "UPDATE technicians SET last_name=?, first_name=?, technician_email=?, " +
+                "contact_number=?, age=?, sex=?, date_employed=?, status=? WHERE technician_id=?";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -128,7 +129,7 @@ public class TechnicianDAO {
 
     // Delete technician
     public void deleteTechnician(int id) {
-        String sql = "DELETE FROM Technician WHERE technician_id=?";
+        String sql = "DELETE FROM technicians WHERE technician_id=?";
 
         try (Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

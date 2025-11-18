@@ -39,7 +39,7 @@ public class DonorDAO{
 
     public List<Donor> getAllDonors(){
         List<Donor> list = new ArrayList<>();
-        String sql = "SELECT * FROM Donor";
+        String sql = "SELECT * FROM donors";
 
         try(Connection conn = DBConnector.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -68,7 +68,7 @@ public class DonorDAO{
     }
 
     public Donor getDonorById(int id){
-        String sql = "SELECT * FROM Donor WHERE donor_id=?";
+        String sql = "SELECT * FROM donors WHERE donor_id=?";
         try(Connection conn = DBConnector.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
 
@@ -124,7 +124,7 @@ public class DonorDAO{
     }
 
     public void deleteDonor(int donorId){
-        String sql = "DELETE FROM Donor WHERE donor_id=?";
+        String sql = "DELETE FROM donors WHERE donor_id=?";
         try(Connection conn = DBConnector.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
 
