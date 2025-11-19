@@ -60,11 +60,10 @@ public class HospitalController {
             String hospitalName = add.getTxtHospitalName().getText().trim();
             String street = add.getTxtStreet().getText().trim();
             String city = add.getTxtCity().getText().trim();
-            String region = add.getTxtRegion().getText().trim();
             String contact = add.getTxtContactNumber().getText().trim();
 
             // Save to database
-            hospitalDAO.addHospital(hospitalName, street, city, region, contact);
+            hospitalDAO.addHospital(hospitalName, street, city, contact);
 
             JOptionPane.showMessageDialog(null, "Hospital saved successfully!");
             add.clearForm();

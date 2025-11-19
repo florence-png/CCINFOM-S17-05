@@ -15,32 +15,20 @@ public class TechnicianDAO {
                 "age, sex, date_employed, status) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DBConnector.getConnection()){
-            int nextId = 0;
-            String getIdQuery = "SELECT MAX(technician_id) FROM technicians";
-            try (Statement stmt = conn.createStatement()) {
-                ResultSet rs = stmt.executeQuery(getIdQuery);
-                if(rs.next()){
-                    nextId = rs.getInt(1) + 1;
-                }
-            }
+        try (Connection conn = DBConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            String insertSql = "INSERT INTO technicians (technician_id, last_name, first_name, technician_email, contact_number, age, sex, date_employed, status) "
-                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            try(PreparedStatement stmt = conn.prepareStatement(insertSql)){
-                stmt.setInt(1, nextId);
-                stmt.setString(2, lastName);
-                stmt.setString(3, firstName);
-                stmt.setString(4, technicianEmail);
-                stmt.setString(5, contactNumber);
-                stmt.setInt(6, age);
-                stmt.setString(7, String.valueOf(sex));
-                stmt.setDate(8, new java.sql.Date(dateEmployed.getTime()));
-                stmt.setString(9, "Active");
+            stmt.setString(1, lastName);
+            stmt.setString(2, firstName);
+            stmt.setString(3, technicianEmail);
+            stmt.setString(4, contactNumber);
+            stmt.setInt(5, age);
+            stmt.setString(6, String.valueOf(sex));
+            stmt.setDate(7, new java.sql.Date(dateEmployed.getTime()));
+            stmt.setString(8, "Active");
 
-                stmt.executeUpdate();
-                System.out.println("Technician added successfully!");
-            }
+            stmt.executeUpdate();
+            System.out.println("Technician added successfully!");
 
         } catch (SQLException e) {
             e.printStackTrace();
