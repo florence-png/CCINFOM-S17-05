@@ -1,5 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class Driver {
     public static void main(String[] args) {
@@ -16,16 +16,19 @@ public class Driver {
             MenuGUI menuGUI = new MenuGUI();
             DonorGUI donorGUI = new DonorGUI();
             TechnicianGUI technicianGUI = new TechnicianGUI();
+            TransactionsGUI transactionsGUI = new TransactionsGUI();
             HospitalGUI hospitalGUI = new HospitalGUI();
 
             mainCardPanel.add(menuGUI, "MENU");
             mainCardPanel.add(donorGUI, "DONOR_GUI");
             mainCardPanel.add(technicianGUI, "TECHNICIAN_GUI");
+            mainCardPanel.add(transactionsGUI, "TRANSACTIONS_GUI");
             mainCardPanel.add(hospitalGUI, "HOSPITAL_GUI");
 
             MenuController menuController = new MenuController(menuGUI, mainCardPanel);
             DonorController donorController = new DonorController(donorGUI, mainCardPanel);
             TechnicianController technicianController = new TechnicianController(technicianGUI, mainCardPanel);
+            TransactionsController transactionsController = new TransactionsController(transactionsGUI, mainCardPanel);
             HospitalController hospitalController = new HospitalController(hospitalGUI, mainCardPanel);
 
             mainFrame.setContentPane(mainCardPanel);
