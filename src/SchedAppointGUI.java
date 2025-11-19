@@ -60,7 +60,7 @@ public class SchedAppointGUI extends JPanel {
 			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 				// Simplify instanceof checks
-				if (value instanceof Bloodbank b) {
+				if (value instanceof Bloodbank b) {// set branch name
 					setText(b.getBranchName());
 				}
 				return this;
@@ -88,11 +88,11 @@ public class SchedAppointGUI extends JPanel {
 		add(center, BorderLayout.CENTER);
 
 		// Bottom buttons
-		JPanel bottom = new JPanel();
+		JPanel bottom = new JPanel();// button panel
 		bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
 		bottom.setBorder(BorderFactory.createEmptyBorder(10, 120, 20, 120));
 
-		confirmBtn = new JButton("Confirm Appointment");
+		confirmBtn = new JButton("Confirm Appointment");// confirm appointment
 		confirmBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		confirmBtn.setPreferredSize(new Dimension(300, 40));
 		confirmBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));

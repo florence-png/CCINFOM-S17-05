@@ -37,10 +37,10 @@ public class TransactionsGUI extends JPanel {
         gridPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
         // Use plain JButtons (default L&F) — use HTML for multiline labels
-        btnSchedule = new JButton("<html><center>Schedule an<br>Appointment</center></html>");
-        btnAssign = new JButton("<html><center>Assign a<br>Technician</center></html>");
-        btnExtract = new JButton("<html><center>Extract Blood</center></html>");
-        btnProcess = new JButton("<html><center>Process<br>Hospital<br>Request</center></html>");
+        btnSchedule = new JButton("<html><center>Schedule an<br>Appointment</center></html>"); // open schedule UI
+        btnAssign = new JButton("<html><center>Assign a<br>Technician</center></html>"); // assign tech to appt
+        btnExtract = new JButton("<html><center>Extract Blood</center></html>"); // record extraction
+        btnProcess = new JButton("<html><center>Process<br>Hospital<br>Request</center></html>"); // process hospital req
 
         btnSchedule.setActionCommand("BTN_SCHEDULE_APPT");
         btnAssign.setActionCommand("BTN_ASSIGN_TECH");

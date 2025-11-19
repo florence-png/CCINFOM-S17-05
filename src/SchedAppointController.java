@@ -16,6 +16,8 @@ public class SchedAppointController implements ActionListener {
         this.mainCardPanel = mainCardPanel;
         addListeners();
         refreshData();
+        // Ensure donors/branches refresh whenever panel is shown
+        gui.addComponentListener(new java.awt.event.ComponentAdapter(){@Override public void componentShown(java.awt.event.ComponentEvent e){refreshData();}});
     }
 
     private void addListeners() {

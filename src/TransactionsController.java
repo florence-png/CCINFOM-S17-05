@@ -17,6 +17,9 @@ public class TransactionsController implements ActionListener {
     private void addListeners() {
         transactionsGUI.getReturnButton().addActionListener(this);
         transactionsGUI.getScheduleButton().addActionListener(this);
+        transactionsGUI.getAssignButton().addActionListener(this);
+        transactionsGUI.getExtractButton().addActionListener(this);
+        transactionsGUI.getProcessButton().addActionListener(this);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -30,7 +33,19 @@ public class TransactionsController implements ActionListener {
                 break;
             case "BTN_SCHEDULE_APPT":
                 cl = (CardLayout) (mainCardPanel.getLayout());
-                cl.show(mainCardPanel, "SCHED_APPT_GUI");
+                cl.show(mainCardPanel, "SCHED_APPT_GUI"); // open scheduling GUI
+                break;
+            case "BTN_ASSIGN_TECH":
+                cl = (CardLayout) (mainCardPanel.getLayout());
+                cl.show(mainCardPanel, "ASSIGN_TECH_GUI"); // open assign technician GUI
+                break;
+            case "BTN_EXTRACT_BLOOD":
+                cl = (CardLayout) (mainCardPanel.getLayout());
+                cl.show(mainCardPanel, "EXTRACT_BLOOD_GUI"); // open extraction GUI
+                break;
+            case "BTN_PROCESS_HOSP_REQ":
+                cl = (CardLayout) (mainCardPanel.getLayout());
+                cl.show(mainCardPanel, "PROCESS_HOSP_GUI"); // open process hospital request (placeholder)
                 break;
             default:
                 System.out.println("Unknown command: " + command);

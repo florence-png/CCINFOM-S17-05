@@ -17,6 +17,8 @@ public class Driver {
             DonorGUI donorGUI = new DonorGUI();
             TechnicianGUI technicianGUI = new TechnicianGUI();
             TransactionsGUI transactionsGUI = new TransactionsGUI();
+            AssignTechGUI assignTechGUI = new AssignTechGUI();
+            ExtractBloodGUI extractBloodGUI = new ExtractBloodGUI();
             HospitalGUI hospitalGUI = new HospitalGUI();
             SchedAppointGUI schedAppointGUI = new SchedAppointGUI();
 
@@ -24,6 +26,8 @@ public class Driver {
             mainCardPanel.add(donorGUI, "DONOR_GUI");
             mainCardPanel.add(technicianGUI, "TECHNICIAN_GUI");
             mainCardPanel.add(transactionsGUI, "TRANSACTIONS_GUI");
+            mainCardPanel.add(assignTechGUI, "ASSIGN_TECH_GUI");
+            mainCardPanel.add(extractBloodGUI, "EXTRACT_BLOOD_GUI");
             mainCardPanel.add(schedAppointGUI, "SCHED_APPT_GUI");
             mainCardPanel.add(hospitalGUI, "HOSPITAL_GUI");
 
@@ -31,8 +35,13 @@ public class Driver {
             DonorController donorController = new DonorController(donorGUI, mainCardPanel);
             TechnicianController technicianController = new TechnicianController(technicianGUI, mainCardPanel);
             TransactionsController transactionsController = new TransactionsController(transactionsGUI, mainCardPanel);
+            AssignTechController assignTechController = new AssignTechController(assignTechGUI, mainCardPanel);
+            ExtractBloodController extractController = new ExtractBloodController(extractBloodGUI, mainCardPanel);
+            ProcHospReqGUI procHospReqGUI = new ProcHospReqGUI();
             SchedAppointController schedController = new SchedAppointController(schedAppointGUI, mainCardPanel);
             HospitalController hospitalController = new HospitalController(hospitalGUI, mainCardPanel);
+            mainCardPanel.add(procHospReqGUI, "PROCESS_HOSP_GUI");
+            ProcHospReqController procController = new ProcHospReqController(procHospReqGUI, mainCardPanel);
 
             mainFrame.setContentPane(mainCardPanel);
             mainFrame.setVisible(true);
