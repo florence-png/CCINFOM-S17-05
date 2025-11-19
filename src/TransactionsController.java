@@ -16,6 +16,7 @@ public class TransactionsController implements ActionListener {
     
     private void addListeners() {
         transactionsGUI.getReturnButton().addActionListener(this);
+        transactionsGUI.getScheduleButton().addActionListener(this);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -26,6 +27,10 @@ public class TransactionsController implements ActionListener {
                 // Go back to main menu
                 CardLayout cl = (CardLayout) (mainCardPanel.getLayout());
                 cl.show(mainCardPanel, "MENU");
+                break;
+            case "BTN_SCHEDULE_APPT":
+                cl = (CardLayout) (mainCardPanel.getLayout());
+                cl.show(mainCardPanel, "SCHED_APPT_GUI");
                 break;
             default:
                 System.out.println("Unknown command: " + command);

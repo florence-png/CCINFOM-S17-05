@@ -18,17 +18,20 @@ public class Driver {
             TechnicianGUI technicianGUI = new TechnicianGUI();
             TransactionsGUI transactionsGUI = new TransactionsGUI();
             HospitalGUI hospitalGUI = new HospitalGUI();
+            SchedAppointGUI schedAppointGUI = new SchedAppointGUI();
 
             mainCardPanel.add(menuGUI, "MENU");
             mainCardPanel.add(donorGUI, "DONOR_GUI");
             mainCardPanel.add(technicianGUI, "TECHNICIAN_GUI");
             mainCardPanel.add(transactionsGUI, "TRANSACTIONS_GUI");
+            mainCardPanel.add(schedAppointGUI, "SCHED_APPT_GUI");
             mainCardPanel.add(hospitalGUI, "HOSPITAL_GUI");
 
             MenuController menuController = new MenuController(menuGUI, mainCardPanel);
             DonorController donorController = new DonorController(donorGUI, mainCardPanel);
             TechnicianController technicianController = new TechnicianController(technicianGUI, mainCardPanel);
             TransactionsController transactionsController = new TransactionsController(transactionsGUI, mainCardPanel);
+            SchedAppointController schedController = new SchedAppointController(schedAppointGUI, mainCardPanel);
             HospitalController hospitalController = new HospitalController(hospitalGUI, mainCardPanel);
 
             mainFrame.setContentPane(mainCardPanel);
