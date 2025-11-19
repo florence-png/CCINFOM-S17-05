@@ -49,12 +49,13 @@ public class DonorDetailPanel extends AbstractDetailPanel<Donor> {
 
     @Override
     protected void populateHistoryPanel(Donor donor) {
+        DonorHistoryDAO historyDAO = new DonorHistoryDAO();
+        List<String> logs = historyDAO.getDonationHistory(donor.getDonorId());
+
         StringBuilder sb = new StringBuilder();
-
-        // TODO: replace with actual DAO logic
-        sb.append("Donated on 2025-11-11 at Maple Branch\n");
-        sb.append("Donated on 2025-09-02 at Hamilton\n");
-
+        for(String log : logs){
+            sb.append(log).append("\n");
+        }
         txtHistory.setText(sb.toString());
     }
 
