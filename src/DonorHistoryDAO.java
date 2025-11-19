@@ -6,7 +6,7 @@ public class DonorHistoryDAO{
     public List<String> getDonationHistory(int donorId){
         List<String> history = new ArrayList<>();
 
-        String sql = """SELECT a.appointment_date, b.branch_name FROM appointments a JOIN blood_banks b ON a.branch_id = b.branch_id WHERE a.donor_id = ? ORDER BY a.appointment_date DESC""";
+        String sql = "SELECT a.appointment_date, b.branch_name " + "FROM appointments a " + "JOIN blood_banks b ON a.branch_id = b.branch_id " + "WHERE a.donor_id = ? " + "ORDER BY a.appointment_date DESC";
 
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -29,4 +29,5 @@ public class DonorHistoryDAO{
         }
         return history;
     }
+
 }
