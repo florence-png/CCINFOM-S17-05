@@ -18,6 +18,7 @@ public class HospitalDetailPanel extends AbstractDetailPanel<Hospital> {
 
         addLabel("Street: " + h.getStreet());
         addLabel("City: " + h.getCity());
+        addLabel("Region: " + h.getRegion());
         addLabel("Contact No.: " + h.getContactNumber());
 
         infoPanel.revalidate();
