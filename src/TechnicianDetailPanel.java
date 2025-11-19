@@ -47,12 +47,13 @@ public class TechnicianDetailPanel extends AbstractDetailPanel<Technician> {
 
     @Override
     protected void populateHistoryPanel(Technician technician) {
+        List<String> history = technicianDAO.getExtractionHistory(technician.getTechnicianId());
         StringBuilder sb = new StringBuilder();
-
-        // TODO: Replace with actual DAO logic
-        sb.append("Extracted Blood on 2025-11-11 at Maple Branch\n");
-        sb.append("Extracted Blood on 2025-09-02 at Hamilton\n");
-
+        
+        for(String record : history){
+            sb.append(record).append("\n");
+        }
+        
         txtHistory.setText(sb.toString());
     }
 
