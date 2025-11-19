@@ -27,7 +27,16 @@ public class DonorHistoryDAO{
         catch(SQLException e){
             e.printStackTrace();
         }
+
+        if(logs.isEmpty()){
+            txtHistory.setText("No donation history available.");
+        }
+        else{
+            txtHistory.setText(sb.toString());
+        }
+        
         return history;
     }
 
 }
+
