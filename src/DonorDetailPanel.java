@@ -66,4 +66,9 @@ public class DonorDetailPanel extends AbstractDetailPanel<Donor> {
         lbl.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0)); // Little spacing
         infoPanel.add(lbl);
     }
+
+    public void loadEntityData(Donor donor){
+        populateInfoPanel(donor);
+        populateHistoryPanel(donor);
+    }
 }
