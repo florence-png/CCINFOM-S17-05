@@ -8,10 +8,10 @@ public class DonorDAO{
     public void addDonor(String lastName, String firstName, String donorEmail,
                          String contactNumber, int age, char sex, java.util.Date birthdate,
                          String bloodType, String remarks) {
-        String sql = "INSERT INTO Donor " +
-                     "(last_name, first_name, donor_email, contact_info, age, sex, " +
-                     "date_of_birth, blood_type, remarks, status) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO donors " +
+                     "(last_name, first_name, donor_email, contact_number, age, sex, " +
+                     "birthdate, blood_type, remarks, status) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try(Connection conn = DBConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)){
@@ -102,7 +102,7 @@ public class DonorDAO{
 
     // Update donor
     public void updateDonor(Donor d){
-        String sql = "UPDATE Donor SET last_name=?, first_name=?, donor_email=?, " +
+        String sql = "UPDATE donors SET last_name=?, first_name=?, donor_email=?, " +
                      "contact_number=?, age=?, sex=?, " +
                      "birthdate=?, blood_type=?, remarks=?, status=? WHERE donor_id=?";
 
