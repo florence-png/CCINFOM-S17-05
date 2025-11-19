@@ -9,28 +9,33 @@ public class HospitalDAO {
         String sql = "INSERT INTO hospitals (hospital_id, hospital_name, street, city, region, contact_number, status)" +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try(Connection conn = DBConnector.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
-
-        	int nextId = 0;
-            String query = "SELECT MAX(technician_id) FROM technicians";
-            ResultSet rs = stmt.executeQuery(query);
-            if(rs.next()){
-                nextId = rs.getInt(1) + 1;
+        try(Connection conn = DBConnector.getConnection()){
+            int nextId = 0;
+            String getIdQuery = "SELECT MAX(hospital_id) FROM hospitals";
+            try(Statement stmt = conn.createStatement()){
+                ResultSet rs = stmt.executeQuery(getIdQuery);
+                if (rs.next()) {
+                    nextId = rs.getInt(1) + 1;
+                }
             }
-            
-            stmt.setInt(1, nextId);
-            stmt.setString(2, hospitalName);
-            stmt.setString(3, street);
-            stmt.setString(4, city);
-            stmt.setString(5, region);
-            stmt.setString(6, contactNumber);
-            stmt.setString(7, "Operational");
 
-            stmt.executeUpdate();
-            System.out.println("Hospital added successfully!");
+            String insertSql = "INSERT INTO hospitals (hospital_id, hospital_name, street, city, region, contact_number, status) "
+                             + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            try(PreparedStatement stmt = conn.prepareStatement(insertSql)){
+                stmt.setInt(1, nextId);
+                stmt.setString(2, hospitalName);
+                stmt.setString(3, street);
+                stmt.setString(4, city);
+                stmt.setString(5, region);
+                stmt.setString(6, contactNumber);
+                stmt.setString(7, "Operational");
 
-        } catch (SQLException e) {
+                stmt.executeUpdate();
+                System.out.println("Hospital added successfully!");
+            }
+
+        }
+        catch(SQLException e){
             e.printStackTrace();
             System.err.println("Failed to add hospital.");
         }
@@ -51,6 +56,7 @@ public class HospitalDAO {
                     rs.getString("hospital_name"),
                     rs.getString("street"),
                     rs.getString("city"),
+                    rs.getString("region"),
                     rs.getString("contact_number"),
                     rs.getString("status")
                 );
@@ -79,6 +85,7 @@ public class HospitalDAO {
                         rs.getString("hospital_name"),
                         rs.getString("street"),
                         rs.getString("city"),
+                        rs.getString("region"),
                         rs.getString("contact_number"),
                         rs.getString("status")
                 );
