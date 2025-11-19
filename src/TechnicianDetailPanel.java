@@ -1,7 +1,8 @@
-import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
+import javax.swing.*;
 
 public class TechnicianDetailPanel extends AbstractDetailPanel<Technician> {
     public TechnicianDetailPanel() {
@@ -47,13 +48,14 @@ public class TechnicianDetailPanel extends AbstractDetailPanel<Technician> {
 
     @Override
     protected void populateHistoryPanel(Technician technician) {
-        List<String> history = technicianDAO.getExtractionHistory(technician.getTechnicianId());
+        ExtractionHistoryDAO dao = new ExtractionHistoryDAO();
+        List<String> history = dao.getTechnicianHistory(technician.getTechnicianId());
         StringBuilder sb = new StringBuilder();
-        
-        for(String record : history){
+
+        for (String record : history) {
             sb.append(record).append("\n");
         }
-        
+
         txtHistory.setText(sb.toString());
     }
 

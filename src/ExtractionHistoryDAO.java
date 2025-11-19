@@ -8,7 +8,7 @@ public class ExtractionHistoryDAO{
 
         String sql = "SELECT a.appointment_date, b.branch_name " + "FROM appointments a " + "JOIN blood_banks b ON a.branch_id = b.branch_id " + "WHERE a.technician_id = ? " + "ORDER BY a.appointment_date DESC";
 
-        try(Connection conn = DBConnection.getConnection();
+        try(Connection conn = DBConnector.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
 
             stmt.setInt(1, technicianId);

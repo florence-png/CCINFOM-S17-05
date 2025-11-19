@@ -1,7 +1,7 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class MenuController implements ActionListener {
 
@@ -47,7 +47,8 @@ public class MenuController implements ActionListener {
                 cl.show(mainCardPanel, "HOSPITAL_GUI");
                 break;
             case "BTN_TRANSACTION":
-                JOptionPane.showMessageDialog(menuGUI.getRootPanel(), "Transaction Clicked!");
+                cl = (CardLayout) (mainCardPanel.getLayout());
+                cl.show(mainCardPanel, "TRANSACTIONS_GUI");
                 break;
 
             case "BTN_REPORTS":
