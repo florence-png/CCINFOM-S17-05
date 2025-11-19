@@ -5,6 +5,7 @@ public class HospitalAddPanel extends AbstractFormPanel {
     private JTextField txtHospitalName;
     private JTextArea txtStreet;
     private JTextField txtCity;
+    private JTextField txtRegion;
     private JTextField txtContactNumber;
 
     public HospitalAddPanel() {
@@ -25,6 +26,7 @@ public class HospitalAddPanel extends AbstractFormPanel {
         txtHospitalName = new JTextField(20);
         txtStreet = new JTextArea(3, 20);
         txtCity = new JTextField(20);
+        txtRegion = new JTextField(20);
         txtContactNumber = new JTextField(20);
 
         int y = 0;
@@ -42,6 +44,11 @@ public class HospitalAddPanel extends AbstractFormPanel {
         gbc.gridy = y; formPanel.add(new JLabel("City:"), gbc);
         gbc.gridx = 1; gbc.anchor = GridBagConstraints.WEST;
         gbc.gridy = y++; formPanel.add(txtCity, gbc);
+        
+        gbc.gridx = 0; gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridy = y; formPanel.add(new JLabel("Region:"), gbc);
+        gbc.gridx = 1; gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridy = y++; formPanel.add(txtRegion, gbc);
 
         gbc.gridx = 0; gbc.gridy = y; gbc.anchor = GridBagConstraints.EAST;
         formPanel.add(new JLabel("Contact Number:"), gbc);
@@ -56,6 +63,7 @@ public class HospitalAddPanel extends AbstractFormPanel {
         txtHospitalName.setText("");
         txtStreet.setText("");
         txtCity.setText("");
+        txtRegion.setText("");
         txtContactNumber.setText("");
     }
 
@@ -68,6 +76,9 @@ public class HospitalAddPanel extends AbstractFormPanel {
     }
     public JTextField getTxtCity() {
         return txtCity;
+    }
+    public JTextField getTxtRegion() {
+        return txtRegion;
     }
     public JTextField getTxtContactNumber() {
         return txtContactNumber;
